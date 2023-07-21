@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = `${process.env.REACT_APP_BASE_URL}/shipping`;
+const URL = `/shipping`;
 
 const addShipping = async (shippingData) => {
     const response = await axios.post(`${URL}/post-shipping`,shippingData);
