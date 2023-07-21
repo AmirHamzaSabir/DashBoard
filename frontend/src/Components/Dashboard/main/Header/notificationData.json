@@ -1,0 +1,24 @@
+[
+    {
+        "id":0,
+        "img":"https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-1/assets/avatar-4-b0163f21.png",
+        "message1":"Congratulation Flora! 🎉",
+        "message2":"Won the monthly best seller badge",
+        "time":"Today"
+    },
+    {
+        "id":1,
+        "img":"https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-1/assets/avatar-5-d340221a.png",
+        "message1":"New message received 👋🏻",
+        "message2":"You have 10 unread messages",
+        "time":"11 Aug"
+    },
+    {
+        "id":1,
+        "img":"https://demos.pixinvent.com/vuexy-vuejs-admin-template/demo-1/assets/avatar-3-47317f35.png",
+        "message1":"Received Order 📦",
+        "message2":"New order received from john",
+        "time":"07 Feb"
+    }
+
+]

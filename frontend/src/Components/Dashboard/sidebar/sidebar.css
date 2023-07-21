@@ -1,0 +1,104 @@
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    inline-size: 260px;
+    background-color: rgb(255,255,255);
+    box-shadow: 0 2px 6px rgba(47, 43, 61,.14),0 0 transparent,0 0 transparent;
+    position: fixed;
+    z-index: 1004;
+    block-size: 100%;
+    transition: transform .25s ease-in-out,inline-size .25s ease-in-out,box-shadow .25s ease-in-out;
+    will-change: transform,inline-size;
+}
+.nav-header{
+    display: flex;
+    overflow: hidden;
+    padding: 1rem 0.75rem;
+    margin-inline: 0.875rem;
+    min-block-size: 64px;
+}
+.nav-head{
+    display: flex;
+    text-decoration: none;
+    column-gap: 0.75rem;
+    align-items: center;
+    margin-inline-end: 5.5rem;
+}
+.nav-head h1{
+    font-size: 22px;
+    color: rgba(47,43,61,0.78);
+}
+.nav-head svg{
+    fill: rgb(115,103,240) !important;
+    width: 32px;
+    height: 32px;
+}
+
+.nav-head-remove-add-btn{
+    display: flex;
+    align-items: center;
+    margin-inline-end: -0.85rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+.uls{
+    block-size: 100%;
+    position: relative;
+    list-style: none;
+    overflow: hidden !important;
+    padding-left: 0 !important;
+}
+.nav-link{
+    margin-block-end: -0.5rem;
+    padding-block-end: 0.5rem;
+}
+.nav-link a {
+    block-size: 2.375rem;
+    margin-block-end: 0.25rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-block: 0;
+    margin-inline: 0.875rem;
+    padding-block: 0;
+    padding-inline: 0.75rem;
+    white-space: nowrap;
+    
+    margin-bottom: 0.9rem;
+}
+.nav-link a:hover{
+    background-color: rgb(245,245,246);
+    border-radius: .5rem;
+}
+.nav-link a svg{
+    font-size: 1.375rem;
+    margin-left: .5rem;
+    margin-right: 0.5rem;
+    fill: none;
+    stroke: rgb(131,128,139);
+}
+.nav-item-title{
+    margin-right: auto;
+    color: rgb(131,128,139);
+}
+.toggle--btn{
+    cursor: pointer;
+    transition: transform .3s;
+}
+.toggle--btn.rotate{  
+    transform: rotate(90deg);
+}
+.child{
+    height: 0;
+    overflow: hidden;
+}
+.nav-link.open > .child{
+    height: auto;
+}
+.visibled{
+    transform: translate(0px) !important;
+}
+.in--visible{
+    transform: translate(-260px);
+}

@@ -1,0 +1,23 @@
+.app{
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    max-width: 100%;
+    /* background: #000; */
+    /* max-width: 100vw; */
+    height: 100vh;
+    position: relative;
+    
+}
+.p-24{
+    padding: 24px;
+}
+.p-20{
+    padding: 20px;
+}
+.color-68{
+    color: rgba(47, 43, 61, .68) !important;
+}
+.color-78{
+    color: rgba(47, 43, 61, .78) !important;
+}

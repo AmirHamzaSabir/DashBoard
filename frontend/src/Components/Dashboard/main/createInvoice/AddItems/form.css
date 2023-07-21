@@ -1,0 +1,5 @@
+@media (max-width: 70em) {
+    .responsive-nav-items{
+        display: none;
+    }
+  }

@@ -1,0 +1,26 @@
+.create-invoice-btn{
+    align-items: center;
+    border-radius: 6px;
+    display: inline-grid;
+    grid-template-areas: "prepend content append";
+    grid-template-columns: max-content auto max-content;
+    text-decoration: none;
+    color: #fff;
+    font-size: .9375rem;
+    min-width: 68px;
+    padding: 0 20px;
+    height: 38px;
+    box-shadow: 0 2px 6px rgba(47,43,61,.14),0 0 transparent,0 0 transparent;
+    background-color: rgb(115, 103, 240);
+}
+.btn-prepend{
+    grid-area: prepend;
+    margin-inline-start: 3px;
+    margin-inline-end: 10px;
+}
+.btn-content{
+    grid-area: content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

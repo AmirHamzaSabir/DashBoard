@@ -1,0 +1,30 @@
+.invoice-btn{
+    height: 38px;
+    margin-bottom: 8px!important;
+    display: flex;
+    flex: 1 0 auto;
+    min-width: 100%;
+    box-shadow: 0 2px 6px rgba(47,43,61,.14),0 0 transparent,0 0 transparent;
+    font-size: .9375rem;
+    padding: 0 20px;
+    border: 1px solid rgb(103,92,216);
+    outline: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.send{
+    stroke: #fff;
+}
+.send svg{
+    width: 17px;
+    height: 17px;
+}
+.primary--btn{
+    background-color: rgb(103,92,216);
+}
+.gray--btn{
+    background-color: rgb(232,232,234);
+    border: 1px solid rgb(232,232,234);
+}

@@ -1,0 +1,46 @@
+.payment--heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.payment--container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+.payment--brand{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+    margin-bottom: 24px;  
+}
+.brand--img--container{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    background-color: rgb(236, 242, 255);
+}
+.brand--inner-img{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.outline--txt{
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: rgb(42, 53, 71);
+}
+.earn--val{
+    font-size: 0.875rem;
+    color: rgb(42, 53, 71);
+    line-height: 1.57;
+    font-weight: 600;
+}

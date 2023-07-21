@@ -1,0 +1,26 @@
+[
+    {
+        "productId":1,
+        "name":"Mac book Air",
+        "cost":"200000",
+        "description":"i7th 11Gen 1Tb 32GB Ram",
+        "category":"Computer Accessories",
+        "img":"https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBwbGUlMjBsYXB0b3B8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
+    },
+    {
+        "productId":2,
+        "name":"Hp Laptop",
+        "cost":"150000",
+        "description":"i7th 7Gen 1Tb 32GB Ram",
+        "category":"Computer Accessories",
+        "img":"https://i.pcmag.com/imagery/reviews/02lcg0Rt9G3gSqCpWhFG0o1-2.fit_lim.size_840x473.v1656623239.jpg"
+    },
+    {
+        "productId":3,
+        "name":"Iphone 14",
+        "cost":"250000",
+        "description":"IOS 16 128GB",
+        "category":"Smart Phone",
+        "img":"https://d1rlzxa98cyc61.cloudfront.net/catalog/product/cache/1801c418208f9607a371e61f8d9184d9/1/8/184909_2022.jpg"
+    }
+]

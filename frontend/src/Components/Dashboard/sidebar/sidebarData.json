@@ -1,0 +1,44 @@
+[
+    {
+        "title":"Dashboard",
+        "path":"/dashboard",
+        "icon":"bi bi-speedometer"
+    },
+    {
+        "title":"User",
+        "path":"/user",
+        "icon":"bi bi-person-fill"
+    },
+    {
+        "title":"Category",
+        "path":"/user/category",
+        "icon":"bi bi-bookmark-fill"
+    },
+    {
+        "title":"Products",
+        "path":"/user/product",
+        "icon":"bi bi-cart-fill"
+    },
+    {
+        "title":"Orders",
+        "path":"/user/order",
+        "icon":"bi bi-cart-check",
+        "child":[
+            {
+                "title":"Refund",
+                "path":"/user/order/refund",
+                "icon":"bi bi-dot"
+            },
+            {
+                "title":"Shipping",
+                "path":"/user/order/shipping",
+                "icon":"bi bi-dot"
+            },
+            {
+                "title":"Invoice Upload",
+                "path":"/user/order/uploadinvoice",
+                "icon":"bi bi-dot"
+            }
+        ]
+    }
+]

@@ -1,0 +1,81 @@
+.sales-by-order-table{
+    display: flex;
+    height: 38px;
+    border-block-end: 1px solid rgba(47,43,61,.16);
+    overflow: hidden;
+}
+.sales-by-order-container{
+    contain: content;
+    display: flex;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+.sales-by-order-content{
+    display: flex;
+    flex: 1 0 auto;
+    position: relative;
+    transition: .2s all cubic-bezier(.4,0,.2,1);
+    white-space: nowrap;
+}
+.sales-by-order-btn{
+    height: 38px;
+    min-width: 90px;
+    outline: none;
+    flex: 1 0 auto;
+    border-style: solid;
+    border: none;
+    background-color: #fff;
+    color: rgb(114,111,123)
+}
+.detail-container{
+    display: flex;
+    flex-direction: column;
+    block-size: auto!important;
+    position: relative;
+}
+.timeline{
+    display: grid;
+    grid-auto-flow: dense;
+    position: relative;
+    grid-template-columns: 0 min-content auto;
+    grid-row-gap: 24px;
+    height: 100%;
+}
+.timeline-item{
+    display: contents;
+}
+.timeline-item-body{
+    grid-column: 3;
+    padding-inline-start: 24px;
+    padding-inline-end: initial;
+}
+.timeline-divider{
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+    grid-column: 2;
+    justify-content: flex-start;
+    padding-block-start: 0;
+}
+.divider-inner{
+    height: 26px;
+    width: 26px;
+}
+.divider-inner svg{
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    stroke: rgb(40, 199, 111);
+}
+.loc svg{
+    stroke: rgb(115, 103, 240);
+}
+.text-second{
+    color: rgb(115, 103, 240) !important;
+}
+.text-sm{
+    font-weight: 500;
+    font-size: .8125rem;
+}
