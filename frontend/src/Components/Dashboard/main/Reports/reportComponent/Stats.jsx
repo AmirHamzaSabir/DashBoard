@@ -66,7 +66,7 @@ const Stats = () => {
                                 </svg>
                             </div>
                             <div className='d-flex flex-column'>
-                                <span class="text-h5">$9745</span>
+                                <span class="text-h5">₹ 9745</span>
                                 <span class="text-sm">Revenue</span>
                             </div>
                         </div>

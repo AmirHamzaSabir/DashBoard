@@ -4,9 +4,7 @@ const Category = require('../models/categoryModel');
 
 
 const addProduct = AsyncHandler(async (req, res) => {
-    const { name, price, category, description, color,image } = req.body;
-    // find the category
-        
+    const { name, price, category, description, color,image } = req.body;  
         const product = await Product.create({
             name, price, category, description, color,image
         });
@@ -17,11 +15,29 @@ const addProduct = AsyncHandler(async (req, res) => {
 const getProducts = AsyncHandler(async(req,res)=>{
     const products = await Product.find();
     res.json(products);
+});
+
+const getProduct = AsyncHandler(async(req,res)=>{
+    const id = req.params.id;
+    const product = await Product.findById(id);
+    res.status(200).json(product);
 })
 
-
-
+const updateProduct = AsyncHandler(async(req,res)=>{
+    const id = req.params.id;
+    const updateProduct = req.body;
+    const product = await Product.findByIdAndUpdate(id,updateProduct,{new:true});
+    res.status(200).json(product);
+})
+const removeProduct = AsyncHandler(async(req,res) =>{
+    const id = req.params.id;
+    const deletedProduct = await Product.deleteOne({ _id: id });
+    res.status(200).json(deletedProduct);
+});
 module.exports = {
     addProduct,
-    getProducts
+    getProducts,
+    getProduct,
+    updateProduct,
+    removeProduct
 }

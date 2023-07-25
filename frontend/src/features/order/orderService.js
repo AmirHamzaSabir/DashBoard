@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = `/order`;
+const URL = `${process.env.REACT_APP_BASE_URL}/order`;
 
 const postOrder = async (orders) => {
     const response = await axios.post(`${URL}/post-order`, orders);

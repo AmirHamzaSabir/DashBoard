@@ -76,7 +76,7 @@ const Itemform = () => {
 
                         <div className="col-sm-4 col-md-2 col-12">
                            <p className="my-2">
-                                <span className="color-68">PKR 50</span>
+                                <span className="color-68">₹ 50</span>
                            </p>
                         </div>
 

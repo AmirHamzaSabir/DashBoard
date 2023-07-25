@@ -13,7 +13,7 @@ const Login = () => {
   // update the count whenever user visits the login
   const updateCount = async () => {
     try{
-      await axios.post('http://localhost:3001/api/visitors/track');
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/visitors/track`);
     } catch (error) {
       toast(error);
     }
@@ -31,7 +31,7 @@ const Login = () => {
                     <Banner loginUpImg={loginImg}/>
                 </Col>
                 <Col lg={4}>
-                    <LoginForm heading={'Welcome to Vuexy! 👋🏻'} title={'Please sign-in to your account and start the adventure'}/>
+                    <LoginForm heading={"Welcome to Khan Copper's! 👋🏻"} title={'Please sign-in to your account and start the adventure'}/>
                 </Col>
             </Row>
     </div>

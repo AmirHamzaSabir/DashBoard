@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAllUsers } from '../../../features/auth/authSlice';
 import { toast } from 'react-toastify';
 import Spinner from '../../Spinner/Spinner';
+import UpdateorDel from './UpdateorDel';
 const List = () => {
   const [data, setData] = useState([]);
   const { isLoading, isError, allUsers, message } = useSelector(state => state.auth);
@@ -23,7 +24,8 @@ const List = () => {
     if (allUsers?.length > 0) {
       const modifiedData = allUsers.map(user => ({
         ...user,
-        role: getRoleName(user.role)
+        role: getRoleName(Number(user.role)),
+        action:<UpdateorDel id={user._id} />
       }));
       setData(modifiedData);
     }
@@ -68,6 +70,12 @@ const List = () => {
         muiTableHeadCellProps: { sx: { color: 'rgba(47, 43, 61, .78)' } },
         renderCell: ({ rowData }) => <span>{rowData.m_number}</span>
       },
+      {
+        accessorKey: 'action',
+        header: 'action',
+        muiTableHeadCellProps: { sx: { color: 'rgba(47, 43, 61, .78)' } },
+        renderCell: ({ rowData }) => <span>{rowData.action}</span> 
+      },
     ],
     []
   );
@@ -101,7 +109,7 @@ const List = () => {
                 </a>
               </div>
             </div>
-            <MaterialReactTable columns={columns} data={allUsers} />
+            <MaterialReactTable columns={columns} data={data} />
           </div>
           <UserNav isOpen={isOpen} toggle={toggleSidebar} show={false} />
         </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-const URL = `/category`;
+const URL = `${process.env.REACT_APP_BASE_URL}/category`;
 
 const postCategory = async (category,token) => {
     const config = {

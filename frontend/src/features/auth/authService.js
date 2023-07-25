@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = `/users`;
+const URL = `${process.env.REACT_APP_BASE_URL}/users`;
 
 const registerUser = async (userData) => {
     const response = await axios.post(`${URL}/register`, userData);
@@ -33,7 +33,25 @@ const addNewUser = async(userData,token) => {
     const response = await axios.post(`${URL}/add-new-user`,userData,config)
     return response.data;
 }
+const updateUser = async(userData,token) => {
+    const config = {
+        headers: {
+            Authorization:`Bearer ${token}`
+        }
+    }
+    const response = await axios.put(`${URL}/update-user`,userData,config)
+    return response.data;
+}
 
+const getSingleUser = async (id,token) => {
+    const config = {
+        headers: {
+            Authorization:`Bearer ${token}`
+        }
+    }
+    const response = await axios.get(`${URL}/get-user/${id}`,config)
+    return response.data;
+}
 
 const getAllUsers = async () => {
     const response = await axios.get(`${URL}/get-users`);
@@ -43,6 +61,15 @@ const getAllUsers = async () => {
 
 const resetPassword = (token,id) => {
     let response = axios.post(`${URL}/reset-password/${token}`,id);
+    return response.data;
+}
+const removeUser = (token,id) => {
+    const config = {
+        headers: {
+            Authorization:`Bearer ${token}`
+        }
+    }
+    let response = axios.delete(`${URL}/remove-user/${id}`,config);
     return response.data;
 }
 
@@ -56,9 +83,12 @@ const authService = {
     loginUser,
     sendResetMail,
     addNewUser,
+    updateUser,
     getAllUsers,
     resetPassword,
-    logout
+    logout,
+    getSingleUser,
+    removeUser
 }
 
 export default authService;

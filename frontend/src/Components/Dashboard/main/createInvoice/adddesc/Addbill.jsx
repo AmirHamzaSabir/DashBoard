@@ -8,7 +8,7 @@ const Addbill = () => {
                 <tbody>
                     <tr>
                         <td class="pe-6 pb-1 ps-0 color-68"> Total Due: </td>
-                        <td class="font-weight-medium pb-1  color-68">PKR 12,110.55</td>
+                        <td class="font-weight-medium pb-1  color-68">₹ 12,110.55</td>
                     </tr>
                     <tr>
                         <td class="pe-6 pb-1 ps-0  color-68"> Bank Name: </td>

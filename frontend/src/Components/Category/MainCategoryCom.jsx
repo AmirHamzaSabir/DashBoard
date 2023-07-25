@@ -38,6 +38,7 @@ const MainCategoryCom = () => {
         accessorKey: 'action',
         header: 'ACTIONS',
         muiTableHeadCellProps: { sx: { color: 'rgba(47,43,61,.78)' } },
+        renderCell: ({ rowData }) => <UpdateorDel />
       },
     ],
     []

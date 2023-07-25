@@ -9,12 +9,12 @@ const cors = require('cors')
 const port = process.env.PORT;
 const app = express();
 const path = require('path');
-
 // allow cross site requests
 app.use(cors());
-// connect to the database
 
+// connect to the database
 connectDB()
+
 // get the data from the body
 app.use(express.json())
 app.use(express.urlencoded({

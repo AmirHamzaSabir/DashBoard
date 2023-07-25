@@ -100,7 +100,7 @@ const TotalEarn = () => {
                                 <div class="sale-item-subtitle text-disabled">Total Sales</div>
                             </div>
                             <div className='sale-profit'>
-                                <span data-v-df741ecb="" class="text-success font-weight-medium">+PKR 98</span>
+                                <span data-v-df741ecb="" class="text-success font-weight-medium">+₹ 98</span>
                             </div>
                         </div>
                     </div>

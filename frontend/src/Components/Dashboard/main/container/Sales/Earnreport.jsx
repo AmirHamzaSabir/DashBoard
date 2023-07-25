@@ -83,7 +83,7 @@ const Earnreport = () => {
                 <div className='row'>
                     <div className='col-sm-5 col-12 d-flex flex-column align-self-end'>
                         <div className='d-flex align-items-center gap-2'>
-                            <h4 class="text-4xl font-weight-medium"> PKR 468 </h4>
+                            <h4 class="text-4xl font-weight-medium"> ₹ 468 </h4>
                             <span className='report-profit'>+4.2</span>
                         </div>
                         <p class="text-sm"> You informed of this week compared to last week </p>
@@ -102,7 +102,7 @@ const Earnreport = () => {
                                 </div>
                                 <h6 className='text-align'>Earnings</h6>
                             </div>
-                            <h4 class="text-val">PKR 545.69</h4>
+                            <h4 class="text-val">₹ 545.69</h4>
                         </div>
 
                         <div className='col-sm-4 col-12'>
@@ -113,7 +113,7 @@ const Earnreport = () => {
                                 </div>
                                 <h6 className='text-align'>Profit</h6>
                             </div>
-                            <h4 class="text-val">PKR 350.69</h4>
+                            <h4 class="text-val">₹ 350.69</h4>
                         </div>
 
                         <div className='col-sm-4 col-12'>
@@ -124,7 +124,7 @@ const Earnreport = () => {
                                 </div>
                                 <h6 className='text-align'>Expense</h6>
                             </div>
-                            <h4 class="text-val">PKR 30.13</h4>
+                            <h4 class="text-val">₹ 30.13</h4>
                         </div>
                     </div>
                 </div>

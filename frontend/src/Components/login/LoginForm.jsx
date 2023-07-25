@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUser,reset } from '../../features/auth/authSlice';
-import Spinner from '../Spinner/Spinner'
+import Spinner from '../Spinner/Spinner';
+import wire from '../../images/wire.png';
 const LoginForm = ({heading,title}) => {
     // initialze the state values for the form
     const [formFields, setFormFields] = useState({
@@ -57,12 +58,7 @@ const LoginForm = ({heading,title}) => {
             <Stack direction='vertical' className='p-4'>
                 <Stack direction='vertical' className='mb-3'>
                     <div className='signup--logo py-3'>
-                        <svg width="32" height="22" viewBox="0 0 34 24" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00183571 0.3125V7.59485C0.00183571 7.59485 -0.141502 9.88783 2.10473 11.8288L14.5469 23.6837L21.0172 23.6005L19.9794 10.8126L17.5261 7.93369L9.81536 0.3125H0.00183571Z"></path>
-                            <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.17969 17.7762L13.3027 3.75173L17.589 8.02192L8.17969 17.7762Z" ></path>
-                            <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.58203 17.2248L14.8129 5.24231L17.6211 8.05247L8.58203 17.2248Z"></path>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.25781 17.6914L25.1339 0.3125H33.9991V7.62657C33.9991 7.62657 33.8144 10.0645 32.5743 11.3686L21.0179 23.6875H14.5487L8.25781 17.6914Z"></path>
-                        </svg>
+                    {/* <img src={wire} alt="Khan Copper's" /> */}
                     </div>
                     <h5 className='heading'>{heading}</h5>
                     <p className='gray'>{title}</p>

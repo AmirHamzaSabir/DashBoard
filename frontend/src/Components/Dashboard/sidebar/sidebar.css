@@ -26,11 +26,10 @@
     margin-inline-end: 5.5rem;
 }
 .nav-head h1{
-    font-size: 22px;
+    font-size: 15px;
     color: rgba(47,43,61,0.78);
 }
-.nav-head svg{
-    fill: rgb(115,103,240) !important;
+.nav-head img{
     width: 32px;
     height: 32px;
 }

@@ -24,7 +24,7 @@ const Saleoverview = () => {
                         <span class="text-sm text-disabled">Sales Overview</span>
                         <span class="text-success">+18.2%</span>
                     </div>
-                    <h4 class="text-h4"> PKR {sales/1000}k </h4>
+                    <h4 class="text-h4"> ₹ {sales/1000}k </h4>
                 </div>
                 <div className='pad' style={{ paddingTop: '0' }}>
                     <div className='row'>

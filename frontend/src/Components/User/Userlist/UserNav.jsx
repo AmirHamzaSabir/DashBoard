@@ -1,11 +1,12 @@
 import AddCategory from '../../Category/AddCategory'
 import AddUser from "./AddUser"
-const UserNav = ({isOpen,toggle,show}) => {
+import EditUser from './EditUser'
+const UserNav = ({isOpen,toggle,show,currentUser}) => {
   return (
     <div className={` ${isOpen ? "addingUser--nav show" : "addingUser--nav"} `}>
         <div className="usernav-content">
             <div className="align-items-center nav-header">
-                <h3 className="mb-0" style={{fontSize: '1.375rem',fontWeight:'500',color:'rgba(47,43,61,.78)'}}>{show ? 'Add Category' : 'Add User'}</h3>
+                <h3 className="mb-0" style={{fontSize: '1.375rem',fontWeight:'500',color:'rgba(47,43,61,.78)'}}>{currentUser? "Update User":show ? 'Add Category' : 'Add User'}</h3>
                 <div className="flex-grow-1"></div>
                 <button type="button" className='crossbtn' onClick={toggle}>
                     <span className="btn-content">
@@ -16,7 +17,7 @@ const UserNav = ({isOpen,toggle,show}) => {
                 </button>
             </div>
 
-            {show ? <AddCategory/> : <AddUser/>}
+            {currentUser?<EditUser currentUser={currentUser} toggle={toggle}/>:show ? <AddCategory/> : <AddUser />}
         </div>
     </div>
   )

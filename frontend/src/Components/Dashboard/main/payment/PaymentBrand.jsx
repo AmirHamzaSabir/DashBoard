@@ -13,7 +13,7 @@ const PaymentBrand = ({img,name,val,brandName}) => {
                 <h6 className="outline--txt">{brandName}</h6>
             </div>
         </div>
-        <h6 className="earn--val">+PKR {val}</h6>
+        <h6 className="earn--val">+₹ {val}</h6>
     </div>
   )
 }
