@@ -1,7 +1,7 @@
 import AddCategory from '../../Category/AddCategory'
 import AddUser from "./AddUser"
 import EditUser from './EditUser'
-const UserNav = ({isOpen,toggle,show,currentUser}) => {
+const UserNav = ({isOpen,toggle,show,currentUser,type}) => {
   return (
     <div className={` ${isOpen ? "addingUser--nav show" : "addingUser--nav"} `}>
         <div className="usernav-content">

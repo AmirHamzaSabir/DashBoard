@@ -22,8 +22,18 @@ const MainCategoryCom = () => {
   if (isError) {
     toast.error('An error occurred');
   } else 
-    setData(categories?.categories);
+  if (categories.categories?.length > 0) {
+    const allCategories = categories.categories.map((category) => { return{
+      ...category,
+      action:<UpdateorDel id={category._id} type={"category"}/>
+    }});
+    console.log(allCategories)
+    setData(allCategories);
     setIsLoading(false);
+  }else{
+    setData(categories.categories);
+    setIsLoading(false)
+  }
   
 }, [categories.categories,isError]);
 
@@ -33,12 +43,13 @@ const MainCategoryCom = () => {
         accessorKey: 'category',
         header: 'CATEGORY',
         muiTableHeadCellProps: { sx: { color: 'rgba(47,43,61,.78)' } },
+        renderCell: ({ rowData }) => <span>{rowData.category}</span>
       },
       {
         accessorKey: 'action',
         header: 'ACTIONS',
         muiTableHeadCellProps: { sx: { color: 'rgba(47,43,61,.78)' } },
-        renderCell: ({ rowData }) => <UpdateorDel />
+        renderCell: ({ rowData }) => <span>{rowData.action}</span> 
       },
     ],
     []
@@ -76,7 +87,7 @@ const MainCategoryCom = () => {
             ) : (
               <p>No data available.</p>
             )}            </div>
-            <UserNav isOpen={isOpen} toggle={toggleSidebar} show={true} />
+            <UserNav isOpen={isOpen} toggle={toggleSidebar} show={true} type={"update"}/>
           </div>
         </div>
       </div>

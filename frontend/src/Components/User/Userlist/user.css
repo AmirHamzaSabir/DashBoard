@@ -18,6 +18,9 @@
     transition-property: box-shadow,transform,visibility,width,height,left,right,top,bottom;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
 }
+.layout-content .card{
+z-index: auto !important;
+}
 .usernav-content{
     display: flex;
     overflow: hidden;

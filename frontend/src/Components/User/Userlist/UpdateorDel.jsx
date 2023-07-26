@@ -1,8 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import UserNav from "./UserNav";
 import { useState } from "react";
-import { getAllUsers, getSingleUser, removeUser } from "../../../features/auth/authSlice";
-const UpdateorDel = ({ id }) => {
+import {
+  getAllUsers,
+  getSingleUser,
+  removeUser,
+} from "../../../features/auth/authSlice";
+import { removeCategory } from "../../../features/categories/categorySlice";
+const UpdateorDel = ({ id, type }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -11,18 +16,29 @@ const UpdateorDel = ({ id }) => {
   };
   const editdata = async (id) => {
     toggleSidebar();
-    dispatch(getSingleUser(id))
-      .then((data) => {
-        setCurrentUser(data.payload);
-      })
-      .catch((err) => console.log(err));
+    if (type === "category") {
+    } else if (type === "user") {
+      dispatch(getSingleUser(id))
+        .then((data) => {
+          setCurrentUser(data.payload);
+        })
+        .catch((err) => console.log(err));
+    }
   };
-  const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
+    if (type === "category") {
+      dispatch(removeCategory(id))
+        .then((data) => {
+          alert("Category deleted successfully");
+        })
+        .catch((err) => console.log(err));
+    } else if (type === "user") {
       dispatch(removeUser(id))
-      .then((data) => {
-        alert("Data deleted successfully");
-      })
-      .catch((err) => console.log(err));
+        .then((data) => {
+          alert("User deleted successfully");
+        })
+        .catch((err) => console.log(err));
+    }
   };
   return (
     <>

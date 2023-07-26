@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { addCategory,reset } from '../../features/categories/categorySlice';
 import Spinner from '../Spinner/Spinner';
 
-const AddCategory = () => {
+const AddCategory = ({type}) => {
     const [category, setCategory] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {isLoading,isSuccess,isError,message} = useSelector(state=>state.category)
     const { user } = useSelector(state => state.auth);
-
+    console.log(type)
     useEffect(() => {
         if (!user) {
             navigate('/register');

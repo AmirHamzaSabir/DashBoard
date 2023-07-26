@@ -49,7 +49,7 @@ const getSingleUser = async (id,token) => {
             Authorization:`Bearer ${token}`
         }
     }
-    const response = await axios.get(`${URL}/get-user/${id}`,config)
+    const response = await axios.get(`${URL}/get-category/${id}`,config)
     return response.data;
 }
 
@@ -73,7 +73,6 @@ const removeUser = (token,id) => {
     return response.data;
 }
 
-
 const logout = () => {
     localStorage.removeItem('user');
 }
@@ -88,7 +87,7 @@ const authService = {
     resetPassword,
     logout,
     getSingleUser,
-    removeUser
+    removeUser,
 }
 
 export default authService;

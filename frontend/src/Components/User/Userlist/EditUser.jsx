@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../../Spinner/Spinner";
 import { toast } from "react-toastify";
 const EditUser = ({ currentUser, toggle }) => {
-  const { user } = useSelector((state) => state.auth);
+  const { user,allUsers } = useSelector((state) => state.auth);
   // use navigation
   const navigate = useNavigate();
   // redirect back to the login, if no user is logged in
@@ -15,17 +15,14 @@ const EditUser = ({ currentUser, toggle }) => {
       navigate("/");
     }
   }, [navigate, user]);
-  const [formFields, setFormFields] = useState({
-    name: "",
-    email: "",
-    password: "",
-    c_password: "",
-    m_number: "",
-    role: 0,
-  });
 
+  const [formFields, setFormFields] = useState({
+    name: `${currentUser ?currentUser.name:""}`,
+      email: `${currentUser?currentUser.email:""}`,
+      m_number: `${currentUser?currentUser.m_number:""}`,
+      role: `${currentUser?currentUser.role:0}`,
+  });
   const { name, email, password, c_password, m_number, role } = formFields;
-  const sideForm = useRef(null);
   const handleChange = (e) => {
     setFormFields((prevValue) => ({
       ...prevValue,
@@ -41,16 +38,7 @@ const EditUser = ({ currentUser, toggle }) => {
     if (isError) {
       alert("Not Authorized");
     }
-    if (currentUser) {
-      setFormFields({
-        ...formFields,
-        name: `${currentUser.name}`,
-        email: `${currentUser.email}`,
-        m_number: `${currentUser.m_number}`,
-        role: `${currentUser.role}`,
-      });
-    }
-  }, []);
+  }, [allUsers]);
   // initialze the dispatch function
   const dispatch = useDispatch();
 

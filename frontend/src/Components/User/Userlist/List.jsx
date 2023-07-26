@@ -25,7 +25,7 @@ const List = () => {
       const modifiedData = allUsers.map(user => ({
         ...user,
         role: getRoleName(Number(user.role)),
-        action:<UpdateorDel id={user._id} />
+        action:<UpdateorDel id={user._id} type={"user"}/>
       }));
       setData(modifiedData);
     }
