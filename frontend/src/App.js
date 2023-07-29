@@ -4,7 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 import { BrowserRouter,Routes, Route } from "react-router-dom";
 import Login from './Components/login/Login';
-import Signup from './Components/signup/Signup';
+import Signup from './Components/signup/Signup' ;
 import Main from './Components/ForgetPass/Main';
 import Dashboard from './Components/Dashboard/Main';
 import Report from './Components/Dashboard/main/Reports/Report';
@@ -31,6 +31,12 @@ import ProfileView from './Components/User/UserProfile/ProfileView';
 import Settings from './Components/User/UserSetting/Settings';
 
 function App() {
+  
+
+// Add this in your component file
+require('react-dom');
+window.React2 = require('react');
+console.log(window.React1 === window.React2);
   return (
     <>
       <BrowserRouter>
@@ -61,6 +67,7 @@ function App() {
         <Route exact path='/user' element={<UserList/>}>
           <Route index element={<List/>}/>
           <Route path='/user/category' element={<MainCategoryCom/>}/>
+          {/* <Route path='/user/category/:id' element={<Custome/>}/> */}
           <Route path='/user/product' element={<MainProduct/>}/>
           <Route path='/user/addproduct' element={<AddProdMain/>}/>
           <Route path='/user/order' element={<Order/>}/>

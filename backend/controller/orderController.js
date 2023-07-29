@@ -30,7 +30,7 @@ const getSingleOrder = AsyncHandler(async (req, res) => {
         _id: orderID
     });
     if (singleOrder) {
-        res.json(singleOrder)
+        res.status(200).json(singleOrder)
     } else {
         res.status(404)
         throw new Error('Product not found')
@@ -46,7 +46,7 @@ const updateStatus = AsyncHandler(async (req, res) => {
         }, {
             new: true,
         })
-        res.json(updatedProduct)
+        res.status(200).json(updatedProduct)
     } else {
         res.status(404);
         throw new Error('Product not found')
@@ -78,7 +78,7 @@ const getTotalAmount = AsyncHandler(async (req, res) => {
     ]);
 
     if (totalAmount.length > 0) {
-        res.json(totalAmount[0].total);
+        res.status(200).json(totalAmount[0].total);
     } else {
         res.json(0);
     }

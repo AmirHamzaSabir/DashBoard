@@ -6,24 +6,24 @@ import { useNavigate } from 'react-router-dom';
 import { addCategory,reset } from '../../features/categories/categorySlice';
 import Spinner from '../Spinner/Spinner';
 
-const AddCategory = ({type}) => {
-    const [category, setCategory] = useState('');
+const AddCategory = ({category}) => {
+    const [categoryName,setCategoryName] =useState(category != ""?category: "");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {isLoading,isSuccess,isError,message} = useSelector(state=>state.category)
     const { user } = useSelector(state => state.auth);
-    console.log(type)
+    console.log(category)
     useEffect(() => {
-        if (!user) {
-            navigate('/register');
-        }
-        if (isError) {
-            toast.error(message)
-        }
-        if (isSuccess) {
-            toast.success('Inserted Successfully')
-        }
+        // if (!user) {
+        //     navigate('/register');
+        // }
+        // if (isError) {
+        //     toast.error(message)
+        // }
+        // if (isSuccess) {
+        //     toast.success('Inserted Successfully')
+        // }
     },[])
+    // console.log(response)
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,16 +32,13 @@ const AddCategory = ({type}) => {
         }
         dispatch(addCategory({ category }));
     }
-    if(isLoading){
-        return <Spinner/>
-    }
     return (
     <div style={{boxShadow:"none"}}>
         <div style={{padding:"24px"}}>
             <form action="">
                 <div className="row">
                     <TextField
-                    value={category}
+                    value={categoryName}
                     onChange={(e)=>setCategory(e.target.value)}
                     type="text"
                     name="category"

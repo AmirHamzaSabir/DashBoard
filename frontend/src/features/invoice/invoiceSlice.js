@@ -48,7 +48,6 @@ export const invoiceSlice = createSlice({
                 state.i_isLoading = true;
             })
             .addCase(postInvoice.rejected, (state, action) => {
-                state.invoice = null
                 state.i_isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -62,7 +61,6 @@ export const invoiceSlice = createSlice({
                 state.i_isLoading = true;
             })
             .addCase(getInvoice.rejected, (state, action) => {
-                state.invoice = null
                 state.i_isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -70,7 +68,8 @@ export const invoiceSlice = createSlice({
             .addCase(getInvoice.fulfilled, (state, action) => {
                 state.i_isLoading = false;
                 state.isSuccess = true;
-                state.invoice = action.payload;
+                state.invoice.push(action.payload);
+                
             })
             
     }

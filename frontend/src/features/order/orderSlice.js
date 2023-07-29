@@ -71,7 +71,6 @@ export const orderSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(postOrder.rejected, (state, action) => {
-                state.orders = null
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -85,7 +84,6 @@ export const orderSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getOrders.rejected, (state, action) => {
-                state.orders = null
                 state.isLoading = false;
                 state.isSuccess = false;
                 state.isError = true;
@@ -100,7 +98,6 @@ export const orderSlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getSingleOrder.rejected, (state, action) => {
-                state.orders = null
                 state.isLoading = false;
                 state.isSuccess = false;
                 state.isError = true;
@@ -109,13 +106,12 @@ export const orderSlice = createSlice({
             .addCase(getSingleOrder.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orders = action.payload;
+                state.orders.push(action.payload);
             })
             .addCase(updateStatus.pending, (state) => {
                 state.isLoading = true;
             })
             .addCase(updateStatus.rejected, (state, action) => {
-                state.orders = null
                 state.isLoading = false;
                 state.isSuccess = false;
                 state.isError = true;
@@ -124,13 +120,12 @@ export const orderSlice = createSlice({
             .addCase(updateStatus.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orders = action.payload;
+                state.orders.push(action.payload);
             })
         .addCase(getSales.pending, (state) => {
                 state.isLoading = true;
             })
             .addCase(getSales.rejected, (state, action) => {
-                state.orders = null
                 state.isLoading = false;
                 state.isSuccess = false;
                 state.isError = true;

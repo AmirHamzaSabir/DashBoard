@@ -36,7 +36,6 @@ export const shippingSlice = createSlice({
                 state.s_isLoading = true;
             })
             .addCase(addShipping.rejected, (state, action) => {
-                state.shipping = null
                 state.s_isLoading = false;
                 state.isSuccess = false;
                 state.isError = true;

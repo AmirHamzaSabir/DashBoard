@@ -280,7 +280,8 @@ export const authSlice = createSlice({
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.u_isLoading = false;
                 state.isSuccess = true;
-                state.allUsers = action.payload;
+                console.log(action.payload)
+                state.allUsers = action.payload
             })
             .addCase(getSingleUser.pending, (state) => {
                 state.u_isLoading = true;

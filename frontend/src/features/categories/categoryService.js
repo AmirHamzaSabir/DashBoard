@@ -22,9 +22,20 @@ const getSingleCategory = async (id,token) => {
             Authorization:`Bearer ${token}`
         }
     }
-    const response = await axios.get(`${URL}/get-user/${id}`,config)
+    const response = await axios.get(`${URL}/get-category/${id}`,config)
     return response.data;
 }
+
+const updateCategory = async(userData,token) => {
+    const config = {
+        headers: {
+            Authorization:`Bearer ${token}`
+        }
+    }
+    const response = await axios.put(`${URL}/update-category/${userData._id}`,userData,config)
+    return response.data;
+}
+
 const removeCategory = (token,id) => {
     const config = {
         headers: {
@@ -40,7 +51,8 @@ const categoryService = {
     getCategory,
     postCategory,
     removeCategory,
-    getSingleCategory
+    getSingleCategory,
+    updateCategory
 }
 
 
