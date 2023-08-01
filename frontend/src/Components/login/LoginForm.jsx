@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import {Form, Stack,Button} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUser,reset } from '../../features/auth/authSlice';
 import Spinner from '../Spinner/Spinner';
 import wire from '../../images/wire.png';
+import { FacebookIcon, GooglePlusIcon, TwitterIcon } from './SocialMediaIcons';
 const LoginForm = ({heading,title}) => {
     // initialze the state values for the form
     const [formFields, setFormFields] = useState({
@@ -32,9 +33,9 @@ const LoginForm = ({heading,title}) => {
             toast('Invalid Credential')
             alert('Invalid Credential');
         } if (isSuccess) {
-            navigate('/dashboard')
+            navigate('/dashboard');
         }
-        dispatch(reset())
+        // dispatch(reset())
     },[isError,isSuccess,user,navigate,dispatch])
     // handle form submission
     const handleSubmit = (e) => {
@@ -87,7 +88,7 @@ const LoginForm = ({heading,title}) => {
                 </Form>
                 <Stack direction='horizontal' className='mx-auto mt-3'>
                     <div className='gray'>New on our platform?</div>
-                    <div className='ms-3 gray'><Link to='/register' style={{ textDecoration: "none", color: "rgb(115,103,240)" }}>Create an account</Link></div>
+                    <div className='ms-3 gray'><NavLink to='/register' style={{ textDecoration: "none", color: "rgb(115,103,240)" }}>Create an account</NavLink></div>
                 </Stack>
                 <Stack direction='horizontal' className='d-flex align-items-center mt-3'>
                     <hr className='hr' aria-orientation="horizontal" role="separator" />
@@ -98,23 +99,17 @@ const LoginForm = ({heading,title}) => {
                     <div className='d-flex justify-content-center gap-3 flex-wrap'>
                         <button className='social--btns' style={{ backgroundColor: '#E1E6F2' }}>
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="facebook">
-                                    <path fill="#1976D2" fill-rule="evenodd" d="M12 5.5H9v-2a1 1 0 0 1 1-1h1V0H9a3 3 0 0 0-3 3v2.5H4V8h2v8h3V8h2l1-2.5z" clip-rule="evenodd"></path>
-                                </svg>
+                                <FacebookIcon />
                             </span>
                         </button>
                         <button className='social--btns' style={{ backgroundColor: "#F9E2DF" }}>
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="google-plus">
-                                    <path fill="#F44336" d="M16 7h-2V5h-1v2h-2v1h2v2h1V8h2zM5 9h2.829A3.006 3.006 0 0 1 5 11c-1.654 0-3-1.346-3-3s1.346-3 3-3c.717 0 1.407.257 1.943.724l1.314-1.508A4.955 4.955 0 0 0 5 3C2.243 3 0 5.243 0 8s2.243 5 5 5 5-2.243 5-5V7H5v2z"></path>
-                                </svg>
+                                <GooglePlusIcon />
                             </span>
                         </button>
                         <button className='social--btns' style={{ backgroundColor: "#DBF0FD" }}>
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="twitter">
-                                    <path fill="#03A9F4" d="M16 3.539a6.839 6.839 0 0 1-1.89.518 3.262 3.262 0 0 0 1.443-1.813 6.555 6.555 0 0 1-2.08.794 3.28 3.28 0 0 0-5.674 2.243c0 .26.022.51.076.748a9.284 9.284 0 0 1-6.761-3.431 3.285 3.285 0 0 0 1.008 4.384A3.24 3.24 0 0 1 .64 6.578v.036a3.295 3.295 0 0 0 2.628 3.223 3.274 3.274 0 0 1-.86.108 2.9 2.9 0 0 1-.621-.056 3.311 3.311 0 0 0 3.065 2.285 6.59 6.59 0 0 1-4.067 1.399c-.269 0-.527-.012-.785-.045A9.234 9.234 0 0 0 5.032 15c6.036 0 9.336-5 9.336-9.334 0-.145-.005-.285-.012-.424A6.544 6.544 0 0 0 16 3.539z"></path>
-                                </svg>
+                                <TwitterIcon />
                             </span>
                         </button>
                     </div>

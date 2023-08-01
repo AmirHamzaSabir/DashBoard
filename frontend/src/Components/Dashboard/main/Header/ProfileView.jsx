@@ -10,11 +10,8 @@ const ProfileView = () => {
     const navigate = useNavigate();
     const { user,isSuccess } = useSelector(state => state.auth);
     useEffect(() => {
-        if (isSuccess) {
-            navigate('/register');
-        }
         dispatch(reset())
-    }, [user, navigate, dispatch,isSuccess]);
+    }, [user, navigate,isSuccess, dispatch]);
     const handleLogout = () => {
         dispatch(logout());
     }

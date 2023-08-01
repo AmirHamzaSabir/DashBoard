@@ -11,7 +11,7 @@ router.get('/get-user/:id', getUserById);
 router.get('/get-admins',AuthMiddleware, getAdmins);
 router.post('/add-new-user',AuthMiddleware, addNewUser);
 //new routes
-router.put('/update-user',AuthMiddleware, updateUser);
+router.put('/update-user/:id',AuthMiddleware, updateUser);
 router.delete('/remove-user/:id',AuthMiddleware,removeUser);
 
 module.exports = router;

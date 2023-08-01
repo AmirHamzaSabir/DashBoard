@@ -92,6 +92,9 @@
     height: 0;
     overflow: hidden;
 }
+.nav-link.open ul > .child{
+    height: auto;
+}
 .nav-link.open > .child{
     height: auto;
 }

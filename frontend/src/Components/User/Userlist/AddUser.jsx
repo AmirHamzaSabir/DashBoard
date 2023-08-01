@@ -37,12 +37,7 @@ const AddUser = () => {
   const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
-  // handle the 3rd party
-  useEffect(() => {
-    if (isError) {
-      alert("Not Authorized");
-    }
-  }, [isError, message, isSuccess]);
+
   // initialze the dispatch function
   const dispatch = useDispatch();
 

@@ -6,22 +6,15 @@ const UserNav = ({ isOpen, toggle, show, data, title ,category}) => {
     let componentToRender;
     switch (title) {
       case "Add User":
-        componentToRender= isOpen?<AddUser show={show}/> : null;
-        console.log(title);
-        break;
-      case "Update User":
-        componentToRender =isOpen ? <EditUser toggle={toggle} show={show}/> :null;
-        console.log(title);
+        componentToRender=<AddUser show={show}/>;
         break;
       case "Add Category":
-        componentToRender = isOpen ? <AddCategory toggle={toggle} show={show}/> :null;
+        componentToRender = <AddCategory toggle={toggle} show={show}/>;
         break;
-      case "Update Category":
-        componentToRender= isOpen ? <AddCategory toggle={toggle} show={show} category={category}/> :null;
-
-        break;
+        
       default:
-        componentToRender= isOpen ? <AddUser toggle={toggle} show={show} /> :null;
+        componentToRender= <AddUser toggle={toggle} show={show} />;
+        break;
     }
 
     return <>{componentToRender}</>;

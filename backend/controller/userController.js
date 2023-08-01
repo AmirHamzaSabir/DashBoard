@@ -123,29 +123,18 @@ const updateUser = AsyncHandler(async (req, res) => {
   const user = req.user;
   var response = null;
  if(user.role === 2){
-    const data = await User.findById(req.body.id);
+    const data = await User.findById(req.params.id);
     if (data) {
-      const id = data.id;
-      const name = req.body.name || data.name;
-      const role = req.body.role ;
-      const password = req.body.password || data.password;
-      const m_number = req.body.m_number || data.m_number;
-      const email = data.email;
-      response = await User.deleteOne({ _id: id });
-      if (response.acknowledged) {
-        response = await User.create({
-          name:name,
-          email:email,
-          password:password,
-          m_number:m_number,
-          role:role,
-        });
-        
-      }
+      response = await User.findOneAndUpdate(
+        { _id: `${req.params.id}` },
+        { $set: req.body },
+        { new: true }
+      );
       res.status(200).json(response);
+    }else{
+      res.status(404);
+      throw new Error("Not Found");
     }
-    res.status(404);
-    throw new Error("Not Found");
   
  }
  else{

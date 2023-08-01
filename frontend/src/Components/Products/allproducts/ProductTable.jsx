@@ -2,28 +2,70 @@ import React from "react";
 import { useMemo, useState, useEffect } from "react";
 import { MaterialReactTable } from "material-react-table";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../../features/products/productSlice";
+import { getProducts, getSingleProduct } from "../../../features/products/productSlice";
 import Spinner from "../../Spinner/Spinner";
 
 import Header from "./Header";
 import UpdateorDel from "../../User/Userlist/UpdateorDel";
+import SpinnerModal from "../../Category/SpinnerModal";
+import Delete from "../../UiElements/DeleteModal";
 const ProductTable = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const { products, isLoading } = useSelector((state) => state.product);
+  const [loadingSpinner, setloadingSpinner] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setshowDelete] = useState(false);
+  const [id, setId] = useState("");
+  const [title, setTitle] = useState("Add Product");
+
+  const toggleDelete = () => {
+    setshowDelete(!showDelete);
+  };
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
   useEffect(() => {
     if (products?.length > 0) {
-      const allProducts = products.map(product => ({
+      const allProducts = products.map((product) => ({
         ...product,
-        action:<UpdateorDel />
-      }))
+        action: (
+          <UpdateorDel id={product._id} onEdit={onEdit} onDelete={onDelete} />
+        ),
+      }));
       setData(allProducts);
     }
   }, [products]);
+
+  const onEdit = (id) => {
+    alert("Edit called");
+  };
+
+  // const onEdit = (id) => {
+  //   setloadingSpinner(true);
+  //   dispatch(getSingleCategory(id))
+  //     .then((data) => {
+  //       setCategory(data.payload);
+  //       setTitle("Update Category");
+  //       setShowEdit(true);
+  //       setloadingSpinner(false);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+  const onDelete = (id) => {
+    setloadingSpinner(true);
+    dispatch(getSingleProduct(id))
+      .then((data) => {
+        console.log(data.payload._id);
+        setId(data.payload._id);
+        setTitle("Delete Product");
+        setshowDelete(true);
+        setloadingSpinner(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -98,6 +140,15 @@ const ProductTable = () => {
         ) : (
           <Spinner />
         )}
+        {showDelete ? (
+          <Delete
+            toggleDelete={toggleDelete}
+            showDelete={showDelete}
+            id={id}
+            title={title}
+          />
+        ) : null}
+        {loadingSpinner ? <SpinnerModal /> : null}
       </div>
     </>
   );

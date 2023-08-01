@@ -5,12 +5,12 @@ import orderReducer from '../features/order/orderSlice'
 import shippingReducer from '../features/shipping/shippingSlice'
 import invoiceReducer from '../features/invoice/invoiceSlice'
 import { combineReducers } from '@reduxjs/toolkit';
-import { createForms } from 'react-redux-form';
-import { initialCategory } from '../features/Forms/Form'
+import { reducer as formReducer } from 'redux-form';
+import { initialUser } from '../features/Forms/Form'
 
-const formReducer = createForms({
-    categoryForm: initialCategory,
-  });
+// const formReducer = createForms({
+//     userForm: initialUser,
+//   });
   
   export const rootReducer = combineReducers({
     auth: authReducer,
@@ -19,6 +19,6 @@ const formReducer = createForms({
     order: orderReducer,
     shipping: shippingReducer,
     invoice: invoiceReducer,
-    ...formReducer, // Include the formReducer
+    form:formReducer
   });
   

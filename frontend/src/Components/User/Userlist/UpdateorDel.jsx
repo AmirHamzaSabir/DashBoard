@@ -1,43 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import UserNav from "./UserNav";
-import { useState } from "react";
-import {
-  getAllUsers,
-  getSingleUser,
-  removeUser,
-} from "../../../features/auth/authSlice";
 
 const UpdateorDel = ({id, onEdit ,onDelete}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-  // const editdata = async (id) => {
-  //   toggleSidebar();
-  //   if (type === "category") {
-  //   } else if (type === "user") {
-  //     dispatch(getSingleUser(id))
-  //       .then((data) => {
-  //         setCurrentUser(data.payload);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // };
-  // const handleDelete = async (id) => {
-  //   if (type === "category") {
-  //     dispatch(removeCategory(id))
-  //       .then((data) => {
-  //         alert("Category deleted successfully");
-  //       })
-  //       .catch((err) => console.log(err));
-  //   } else if (type === "user") {
-  //     dispatch(removeUser(id))
-  //       .then((data) => {
-  //         alert("User deleted successfully");
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // };
+
   return (
     <>
       <div>

@@ -6,43 +6,56 @@ import "../User/Userlist/user.css";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import {
-  removeCategory,
   getCategory,
   getSingleCategory,
 } from "../../features/categories/categorySlice";
+import Delete from "../UiElements/DeleteModal";
 import Spinner from "../Spinner/Spinner";
 import EditCategory from "./Model";
+import SpinnerModal from "./SpinnerModal";
 const MainCategoryCom = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const { categories, isError, isSuccess, message } = useSelector(
+  const { categories, isError, message } = useSelector(
     (state) => state.category
   );
   const dispatch = useDispatch();
+  const [loadingTable, setLoadingTable] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [loadingSpinner, setloadingSpinner] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [showDelete, setshowDelete] = useState(false);
+  const [id, setId] = useState("");
   const [title, setTitle] = useState("Add Category");
   const [category, setCategory] = useState("");
   const [modifiedCategories, setmodifiedCategories] = useState();
-  const toggleEdit = () =>{
+  const toggleEdit = () => {
     setShowEdit(!showEdit);
-  }
+  };
+  const toggleDelete = () => {
+    setshowDelete(!showDelete);
+  };
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
   const onEdit = (id) => {
+    setloadingSpinner(true);
     dispatch(getSingleCategory(id))
       .then((data) => {
         setCategory(data.payload);
         setTitle("Update Category");
-        toggleEdit();
-        
+        setShowEdit(true);
+        setloadingSpinner(false);
       })
       .catch((err) => console.log(err));
   };
   const onDelete = (id) => {
-    dispatch(removeCategory(id))
+    setloadingSpinner(true);
+    dispatch(getSingleCategory(id))
       .then((data) => {
-        alert("Category deleted successfully");
+        console.log(data.payload._id)
+        setId(data.payload._id);
+        setTitle("Delete Category");
+        setshowDelete(true);
+        setloadingSpinner(false);
       })
       .catch((err) => console.log(err));
   };
@@ -52,9 +65,6 @@ const MainCategoryCom = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isError) {
-      toast.error("An error occurred");
-    }
     if (categories?.length > 0) {
       const allCategories = categories.map((category) => ({
         ...category,
@@ -63,9 +73,9 @@ const MainCategoryCom = () => {
         ),
       }));
       setmodifiedCategories(allCategories);
-      setIsLoading(false);
+      setLoadingTable(false);
     }
-  }, [categories, isError]);
+  }, [categories]);
 
   const columns = useMemo(
     () => [
@@ -87,7 +97,7 @@ const MainCategoryCom = () => {
 
   return (
     <div className="layout-content">
-      {isLoading ? (
+      {loadingTable ? (
         <Spinner />
       ) : (
         <div>
@@ -149,7 +159,16 @@ const MainCategoryCom = () => {
           </div>
         </div>
       )}
-      {showEdit?<EditCategory toggleEdit={toggleEdit} showEdit={showEdit} categoryName={category}/> : null}
+      {showEdit ? (
+        <EditCategory
+          toggleEdit={toggleEdit}
+          showEdit={showEdit}
+          categoryName={category}
+          title={title}
+        />
+      ) : null}
+      {showDelete ? <Delete toggleDelete={toggleDelete} showDelete={showDelete} id={id} title={title} /> : null}
+      {loadingSpinner ? <SpinnerModal /> : null}
     </div>
   );
 };

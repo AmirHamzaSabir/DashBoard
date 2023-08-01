@@ -49,8 +49,7 @@ export const updateCategory = createAsyncThunk('category/update', async (userDat
         console.log(userData)
         return categoryService.updateCategory(userData, token);
     } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        return thunkApi.rejectWithValue(message);
+        return thunkApi.rejectWithValue(error.error);
     }
 });
 
@@ -61,6 +60,7 @@ export const removeCategory = createAsyncThunk('category/remove-single-category'
         return categoryService.removeCategory(token,id);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+        console.log(error)
         return thunkApi.rejectWithValue(message);
     }
 });
@@ -77,7 +77,7 @@ export const categorySlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder
+        builder 
             .addCase(addCategory.pending, (state) => {
                 state.isLoading = true;
             })
@@ -89,7 +89,8 @@ export const categorySlice = createSlice({
             .addCase(addCategory.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.categories.push(action.payload);
+                state.isError = false;
+                state.categories.push(action.payload.newCategory);
             })
             .addCase(getCategory.pending, (state) => {
                 state.isLoading = true;
@@ -138,16 +139,12 @@ export const categorySlice = createSlice({
                 state.isError = false;
                 // Find the index of the updated record
                 const updatedRecordIndex = state.categories.findIndex(
-                    (user) => category._id === action.meta.arg.id
+                    (category) => category._id === action.meta.arg.id
                 );
                 console.log(action)
                 // If the updated record is found in the categories array, update it
                 if (updatedRecordIndex !== -1) {
-                    state.categories[updatedRecordIndex] = action.payload;
-                    state.categories.forEach(category =>{
-                        console.log(category)
-                    })
-
+                    state.categories.splice(updatedRecordIndex,1,action.payload);
                 }
             })
             .addCase(removeCategory.pending, (state) => {
@@ -161,9 +158,11 @@ export const categorySlice = createSlice({
             .addCase(removeCategory.fulfilled, (state,action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
+                state.payload = action.payload
+                console.log(action)
                 //  // Find the index of the deleted record
                 const deletedRecordIndex = state.categories.findIndex(
-                    (user) => user._id === action.meta.arg
+                    (category) => category._id === action.meta.arg
                 );
   
                 // // If the deleted record is found in the allUsers array, remove it
@@ -173,5 +172,5 @@ export const categorySlice = createSlice({
             })
     }
 })
-// export const { reset } = categorySlice.actions;
+export const { reset } = categorySlice.actions;
 export default categorySlice.reducer

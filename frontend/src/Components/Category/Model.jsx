@@ -3,47 +3,33 @@ import { Fragment, useState } from "react";
 
 // ** Reactstrap Imports
 import {
-  Card,
   Row,
   Col,
   Modal,
   Input,
   Label,
   Button,
-  CardBody,
-  CardText,
-  CardTitle,
   ModalBody,
   ModalHeader,
-  FormFeedback,
 } from "reactstrap";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 // ** Third Party Components
 // import Select from 'react-select'
 import { useDispatch, useSelector } from "react-redux";
 import { updateCategory } from "../../features/categories/categorySlice";
+import { toastPromise } from "../UiElements/PromiseToast";
 
-const EditCategory = ({ categoryName, showEdit, toggleEdit }) => {
-  const { categories,response } = useSelector((state) => state.category);
+const EditCategory = ({ categoryName, showEdit, toggleEdit,title }) => {
+  const { categories, response } = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const [name, setName] = useState(categoryName.category);
-
-  const checkCategory = (category) => {
-    return categories.every(
-      (item) =>
-        item.category.toLowerCase().trim() == category.toLowerCase().trim()
-    );
-  };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(response)
-    dispatch(updateCategory({ ...response, category: name }))
-      .then((res) => {
-        alert("Updated Successfully");
-        toggleEdit();
-    })
-      .catch((err) => console.log(error));
+    toastPromise(dispatch(updateCategory({ ...response, category: name })),"Saving Changes....","Updated Successfully","Error occured !");
+
   };
   const handleChange = (e) => {
     setName(e.target.value);
@@ -62,7 +48,7 @@ const EditCategory = ({ categoryName, showEdit, toggleEdit }) => {
         ></ModalHeader>
         <ModalBody className="px-sm-5 mx-50 pb-5">
           <div className="text-center mb-2">
-            <h3 className="mb-1">Update Category Information</h3>
+            <h3 className="mb-1"> {title}</h3>
           </div>
           <Row tag="form" className="gy-1 pt-75">
             <Col md={12} xs={12}>
@@ -85,7 +71,7 @@ const EditCategory = ({ categoryName, showEdit, toggleEdit }) => {
                 color="primary"
                 onClick={handleSubmit}
               >
-                Update
+                {title.split(" ")[0]}
               </Button>
               <Button
                 type="reset"
@@ -99,6 +85,14 @@ const EditCategory = ({ categoryName, showEdit, toggleEdit }) => {
           </Row>
         </ModalBody>
       </Modal>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Fragment>
   );
 };

@@ -27,7 +27,8 @@ const getTotalUsers = AsyncHandler(async (req, res) => {
 const getTotalCount = AsyncHandler(async (req, res) => { 
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth();
-    const count = await Visitors.findOne({ month: currentMonth });
+    var count = await Visitors.findOne({ month: currentMonth });
+    count = count === null ? {count:0} : count;
     res.send(count.count.toString())
 })
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div className='col-12'>
+    <div className='col-12 mx-5'>
         <div className='d-flex flex-column'>
             <div>
                 <h2>Create Product</h2>

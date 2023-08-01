@@ -8,7 +8,7 @@ import authService from './authService';
 const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
-    user: user ? user : null,
+    user: user ? user : {},
     u_isLoading: false,
     isSuccess: false,
     isError: false,
@@ -129,7 +129,6 @@ export const authSlice = createSlice({
     reducers: {
         reset: (state) => {
             state.u_isLoading = false;
-            state.isSuccess = false;
             state.isError = false;
             state.message = '';
         }
@@ -161,13 +160,13 @@ export const authSlice = createSlice({
             .addCase(logout.fulfilled, (state) => {
                 state.u_isLoading = false;
                 state.isSuccess = true;
-                state.user = null;
+                state.user = {};
             })
             .addCase(loginUser.pending, (state) => {
                 state.u_isLoading = true;
             })
             .addCase(loginUser.rejected, (state, action) => {
-                state.user = null
+                state.user = {}
                 state.u_isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
@@ -175,7 +174,7 @@ export const authSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.u_isLoading = false;
                 state.isSuccess = true;
-                state.user = action.payload;
+                state.user = action.payload.data;
             })
             .addCase(sendResetMail.pending, (state) => {
                 state.u_isLoading = true;
@@ -247,7 +246,7 @@ export const authSlice = createSlice({
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.u_isLoading = false;
                 state.isSuccess = true;
-                state.message = "Updated Successfully";
+                state.message = action.payload;
                 // Find the index of the updated record
                   const updatedRecordIndex = state.allUsers.findIndex(
                     (user) => user._id === action.meta.arg.id
@@ -255,22 +254,12 @@ export const authSlice = createSlice({
                 console.log(updatedRecordIndex)
                 // If the updated record is found in the allUsers array, update it
                 if (updatedRecordIndex !== -1) {
-                    state.allUsers.forEach(user =>{
-                        if(user._id === action.meta.arg.id){
-
-                            console.log(user)
-                        }
-                    })
                     state.allUsers[updatedRecordIndex] = action.payload;
-                    state.allUsers.forEach(user =>{
-                        console.log(user)
-                    })
-
                 }
                         
             })
             .addCase(getAllUsers.pending, (state) => {
-                state.u_isLoading = true;
+                state.u_isLoading = true; 
             })
             .addCase(getAllUsers.rejected, (state, action) => {
                 state.u_isLoading = false;
@@ -280,7 +269,6 @@ export const authSlice = createSlice({
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.u_isLoading = false;
                 state.isSuccess = true;
-                console.log(action.payload)
                 state.allUsers = action.payload
             })
             .addCase(getSingleUser.pending, (state) => {

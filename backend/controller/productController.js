@@ -24,10 +24,26 @@ const getProduct = AsyncHandler(async(req,res)=>{
 })
 
 const updateProduct = AsyncHandler(async(req,res)=>{
-    const id = req.params.id;
-    const updateProduct = req.body;
-    const product = await Product.findByIdAndUpdate(id,updateProduct,{new:true});
-    res.status(200).json(product);
+    const user = req.user;
+    var response = null;
+ if(user.role === 2 || user.role === 1){
+    const data = await Product.findById(req.params.id);
+    if (data) {
+      response = await await Product.findOneAndUpdate(
+        { _id: `${req.params.id}` },
+        { $set: req.body },
+        { new: true }
+      );
+      res.status(200).json(response);
+    }else{
+        res.status(404);
+        throw new Error("Not Found");
+      }
+ }
+ else{
+    res.status(401);
+    throw new Error("You are not authorized");
+ }
 })
 const removeProduct = AsyncHandler(async(req,res) =>{
     const id = req.params.id;
