@@ -5,10 +5,17 @@ import Spinner from "../../Spinner/Spinner";
 import { addProduct, reset } from "../../../features/products/productSlice";
 import { FormGroup, Label, Input, Button, Form, Row, Col } from "reactstrap";
 import { Upload } from "react-feather";
+import { toastPromise } from "../../UiElements/PromiseToast";
+import { ToastContainer } from "react-toastify";
 const ProductForm = () => {
   const [load, setLoad] = useState(true);
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
+  const [myCategory, setMyCategory] = useState([]);
+  const { categories, isLoading } = useSelector((state) => state.category);
+  const { message, isError } = useSelector((state) => state.product);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [fileCount, setFileCount] = useState(0);
   const [formFields, setFormFields] = useState({
     name: "",
     price: "",
@@ -16,20 +23,7 @@ const ProductForm = () => {
     category: "",
     color: "",
   });
-  const [myCategory, setMyCategory] = useState([]);
-  const { categories, isLoading } = useSelector((state) => state.category);
-  const { message, isError } = useSelector((state) => state.product);
   const { name, price, description, category, color } = formFields;
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [fileCount, setFileCount] = useState(0);
-  // handle the change
-  const handleImage = (e) => {
-    console.log(e.target.files.length);
-    const file = e.target.files[0];
-    const img = URL.createObjectURL(file);
-    setPhotoPreview(img);
-    setPhoto(file);
-  };
 
   // handle the change
   const handleChange = (e) => {
@@ -66,30 +60,34 @@ const ProductForm = () => {
     if (!isLoading) {
       setMyCategory(categories);
       setLoad(false);
+      // Set Default category field
+      setFormFields((prevValue) => ({
+        ...prevValue,
+        category: `${categories[0]._id !== "" ? categories[0]._id : ""}`,
+      }));
     }
   }, [categories, isLoading]);
 
-   const handlePreview =async (e) => {
-    setSelectedFiles([])
+  const handlePreview = async (e) => {
+    setSelectedFiles([]);
     const files = e.target.files;
     const filePreviews = [];
-    setFileCount(files.length);
-    console.log(files)
-    for (var i=0; i< 5; i++) {
-        var img = await imageUpload(files[i]);
-        filePreviews.push(img)
-        if(filePreviews.length === 5){
-            setSelectedFiles(filePreviews)
-        }
+    const iterator = files.length > 5 ? 5 : files.length;
+    setFileCount(iterator);
 
+    for (var i = 0; i < iterator; i++) {
+      var img = await imageUpload(files[i]);
+      filePreviews.push(img);
+      if (filePreviews.length === iterator) {
+        setSelectedFiles(filePreviews);
+      }
     }
-    console.log(filePreviews)
+    console.log(filePreviews);
   };
   // handle Image
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const image = await imageUpload(photo);
-    console.log(selectedFiles)
+    const image = selectedFiles.join(", ");
     const productData = {
       name,
       price,
@@ -98,10 +96,16 @@ const ProductForm = () => {
       color,
       image,
     };
-    if (!name || !price || !description || !category || !color || !photo) {
+    console.log(productData);
+    if (!name || !price || !description || !category || !color || !image) {
       alert("please enter all the fields");
     } else {
-      dispatch(addProduct(productData));
+      toastPromise(
+        dispatch(addProduct(productData)),
+        "Submitting.....",
+        "Added Successfully",
+        "Error occurred!"
+      );
       setFormFields({
         ...formFields,
         name: "",
@@ -110,9 +114,9 @@ const ProductForm = () => {
         category: "",
         color: "",
       });
-      setPhotoPreview(null);
-      setPhoto(null);
-      alert("Product added");
+      setSelectedFiles([]);
+      setFileCount(0);
+      // alert("Product added");
     }
   };
   useEffect(() => {
@@ -133,7 +137,7 @@ const ProductForm = () => {
               <div id="productImages">
                 {selectedFiles.map((file, index) => (
                   <figure key={index}>
-                    <img src={file} alt="Not Found" />
+                    <img src={file === undefined ? "" : file} alt="Not Found" />
                     {/* <figcaption>{file.name}</figcaption> */}
                   </figure>
                 ))}
@@ -155,31 +159,6 @@ const ProductForm = () => {
                   : `${fileCount} Image Selected`}
               </p>
             </Col>
-            {/* <Col
-              className="mb-3 d-flex flex-column align-items-center"
-              xs={12}
-              md={12}
-            >
-              <Label htmlFor="productImg" className="mb-3 fs-4">
-                Images
-              </Label>
-              <div className="image w-25 mb-3">
-                <img
-                  width="100%"
-                  name="image"
-                  src={photoPreview ? photoPreview : ""}
-                  alt=""
-                />
-              </div>
-              <Input
-                name="photo"
-                onChange={handleImage}
-                type="file"
-                id="productImg"
-                multiple=""
-                data-max_length="10"
-              />
-            </Col> */}
 
             <Col className="mb-3" xs={12} md={6}>
               <FormGroup>
@@ -282,6 +261,14 @@ const ProductForm = () => {
             </Col>
           </Row>
         </Form>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     );
   }

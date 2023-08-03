@@ -13,7 +13,7 @@ const Signup = () => {
     // update the count whenever user visits the login
     const updateCount = async () => {
         try{
-        await axios.post('http://localhost:3001/api/visitors/track');
+        await axios.post(`${process.env.REACT_APP_BASE_URL}/api/visitors/track`);
         } catch (error) {
         toast(error);
         }

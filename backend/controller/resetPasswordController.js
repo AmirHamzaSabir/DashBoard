@@ -42,7 +42,7 @@ const resetPassword = AsyncHandler(async (req, res) => {
             from: 'hsuntariq@gmail.com',
             to: checkUser.email,
             subject: 'Password Reset',
-            text: `Please click the following link to reset your password: http://localhost:3000/reset-password/${resetToken}`,
+            text: `Please click the following link to reset your password: ${process.env.Frontend_URI}/reset-password/${resetToken}`,
         };
 
             // Send email using the transporter

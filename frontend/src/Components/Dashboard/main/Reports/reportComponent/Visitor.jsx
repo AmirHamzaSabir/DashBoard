@@ -7,10 +7,11 @@ import ContentSpinner from '../../../../Spinner/ContentSpinner';
 const Visitor = () => {
   const [count, setCount] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const url = process.env.REACT_APP_BASE_URL;
   // get the visitor count
   const getVisitors = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/visitors/getCount');
+      const response = await axios.get(`${url}/api/visitors/getCount`);
       const data = await response.data; 
       setIsLoading(false);
       setCount(data);

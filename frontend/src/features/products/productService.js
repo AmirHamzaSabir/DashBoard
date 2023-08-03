@@ -1,5 +1,7 @@
 import axios from 'axios';
-const URL = `${process.env.REACT_APP_BASE_URL}/product`;
+const URL = `${process.env.REACT_APP_BASE_URL}/api/product`;
+// const URL = `http://localhost:3001/api/product`;
+
 
 const addProduct = async (productData) => {
     const response = await axios.post(`${URL}/add-product`,productData);

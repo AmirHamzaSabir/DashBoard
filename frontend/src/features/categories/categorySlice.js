@@ -137,9 +137,10 @@ export const categorySlice = createSlice({
                 state.isLoading = false;
                 state.isSuccess = true;
                 state.isError = false;
+                console.log(action.payload)
                 // Find the index of the updated record
                 const updatedRecordIndex = state.categories.findIndex(
-                    (category) => category._id === action.meta.arg.id
+                    (category) => category._id === action.payload._id
                 );
                 console.log(action)
                 // If the updated record is found in the categories array, update it

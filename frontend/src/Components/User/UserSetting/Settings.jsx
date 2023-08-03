@@ -8,7 +8,7 @@ const Settings = () => {
         phoneNo:"134567952",
         country:"USA",
         language:"English",
-        image:"http://localhost:3000/static/media/avatar.ead651e178d810a8d0f1.png"
+        image:`${process.env.REACT_APP_BASE_URL}/static/media/avatar.ead651e178d810a8d0f1.png`
     })
     const handleChange = (e) => {
         const val = e.target.value

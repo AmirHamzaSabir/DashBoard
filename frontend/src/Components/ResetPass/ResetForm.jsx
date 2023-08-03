@@ -23,7 +23,7 @@ const ResetForm = ({heading,title}) => {
                 setLoading(true);
             try {
                 await axios.post(
-                `http://localhost:3001/api/users/reset-password/${token}`,
+                `${process.env.REACT_APP_BASE_URL}/api/users/reset-password/${token}`,
                 { password: password }
             );
             setLoading(false)

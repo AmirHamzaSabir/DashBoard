@@ -1,5 +1,6 @@
 import axios from 'axios';
-const URL = `${process.env.REACT_APP_BASE_URL}/invoice`;
+const URL = `${process.env.REACT_APP_BASE_URL}/api/invoice`;
+// const URL = `http://localhost:3001/api/invoice`;
 
 const postInvoice = async (invoice) => {
     const response = await axios.post(`${URL}/add-invoice`, invoice);

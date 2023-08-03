@@ -21,8 +21,8 @@ const chargeAmount = AsyncHandler(async(req, res) => {
     const stripeSession = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
-        success_url: 'https://localhost:3000/api/users/login',
-        cancel_url:'https://localhost:3000/api/users/register'
+        success_url: `${process.env.Frontend_URI}/api/users/login`,
+        cancel_url: `${process.env.Frontend_URI}/api/users/register`
     })
     res.send(JSON.stringify({
         url: stripeSession.url

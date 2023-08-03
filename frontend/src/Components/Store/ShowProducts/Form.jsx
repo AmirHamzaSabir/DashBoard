@@ -23,7 +23,7 @@ const Form = ({ item }) => {
     console.log(item)
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3001/api/payments/charge', {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/api/payments/charge`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

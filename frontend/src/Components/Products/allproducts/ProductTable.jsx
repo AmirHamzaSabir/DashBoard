@@ -2,13 +2,17 @@ import React from "react";
 import { useMemo, useState, useEffect } from "react";
 import { MaterialReactTable } from "material-react-table";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, getSingleProduct } from "../../../features/products/productSlice";
+import {
+  getProducts,
+  getSingleProduct,
+} from "../../../features/products/productSlice";
 import Spinner from "../../Spinner/Spinner";
 
 import Header from "./Header";
 import UpdateorDel from "../../User/Userlist/UpdateorDel";
 import SpinnerModal from "../../Category/SpinnerModal";
 import Delete from "../../UiElements/DeleteModal";
+import EditProduct from "../addproduct/EditProduct";
 const ProductTable = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
@@ -18,7 +22,11 @@ const ProductTable = () => {
   const [showDelete, setshowDelete] = useState(false);
   const [id, setId] = useState("");
   const [title, setTitle] = useState("Add Product");
+  const [product, setProduct] = useState("");
 
+  const toggleEdit = () => {
+    setShowEdit(!showEdit);
+  };
   const toggleDelete = () => {
     setshowDelete(!showDelete);
   };
@@ -33,26 +41,28 @@ const ProductTable = () => {
         action: (
           <UpdateorDel id={product._id} onEdit={onEdit} onDelete={onDelete} />
         ),
+        image: product.image.split(", ")[0],
       }));
       setData(allProducts);
     }
   }, [products]);
 
-  const onEdit = (id) => {
-    alert("Edit called");
-  };
-
   // const onEdit = (id) => {
-  //   setloadingSpinner(true);
-  //   dispatch(getSingleCategory(id))
-  //     .then((data) => {
-  //       setCategory(data.payload);
-  //       setTitle("Update Category");
-  //       setShowEdit(true);
-  //       setloadingSpinner(false);
-  //     })
-  //     .catch((err) => console.log(err));
+  //   alert("Edit called");
   // };
+
+  const onEdit = (id) => {
+    setloadingSpinner(true);
+    dispatch(getSingleProduct(id))
+      .then((data) => {
+        console.log(data.payload)
+        setProduct(data.payload);
+        setTitle("Update Product");
+        setShowEdit(true);
+        setloadingSpinner(false);
+      })
+      .catch((err) => console.log(err));
+  };
   const onDelete = (id) => {
     setloadingSpinner(true);
     dispatch(getSingleProduct(id))
@@ -149,6 +159,14 @@ const ProductTable = () => {
           />
         ) : null}
         {loadingSpinner ? <SpinnerModal /> : null}
+        {showEdit ? (
+          <EditProduct
+            toggleEdit={toggleEdit}
+            showEdit={showEdit}
+            
+            title={title}
+          />
+        ) : null}
       </div>
     </>
   );

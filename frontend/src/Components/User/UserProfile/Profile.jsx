@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Profile = () => {
+    const url = process.env.REACT_APP_BASE_URL;
     return (
         <div className='col-12'>
             <div className='card p-24'>
@@ -10,7 +11,7 @@ const Profile = () => {
                     </div>
                     <div className='col-12 my-2'>
                         <div className='profile-img'>
-                            <img src="http://localhost:3000/static/media/avatar.ead651e178d810a8d0f1.png" alt="" />
+                            <img src={`${url}/static/media/avatar.ead651e178d810a8d0f1.png`} alt="" />
                         </div>
                     </div>
                     <div className='col-12 mt-1 mb-3'>

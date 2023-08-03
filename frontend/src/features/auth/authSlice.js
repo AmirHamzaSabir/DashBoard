@@ -249,7 +249,7 @@ export const authSlice = createSlice({
                 state.message = action.payload;
                 // Find the index of the updated record
                   const updatedRecordIndex = state.allUsers.findIndex(
-                    (user) => user._id === action.meta.arg.id
+                    (user) => user._id === action.payload._id
                 );
                 console.log(updatedRecordIndex)
                 // If the updated record is found in the allUsers array, update it

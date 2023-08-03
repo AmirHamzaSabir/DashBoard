@@ -1,6 +1,6 @@
 import axios from 'axios';
-const URL = `${process.env.REACT_APP_BASE_URL}/category`;
-
+const URL = `${process.env.REACT_APP_BASE_URL}/api/category`;
+// const URL = `http://localhost:3001/api/category`;
 const postCategory = async (category,token) => {
     const config = {
         headers: {
