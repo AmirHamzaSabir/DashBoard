@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "../../../features/categories/categorySlice";
 import Spinner from "../../Spinner/Spinner";
-import { addProduct, reset } from "../../../features/products/productSlice";
+import { addProduct, reset, updateProduct } from "../../../features/products/productSlice";
 import {
   FormGroup,
   Label,
@@ -18,32 +18,22 @@ import {
 import { Upload } from "react-feather";
 import { toastPromise } from "../../UiElements/PromiseToast";
 import { ToastContainer } from "react-toastify";
-const EditProduct = () => {
-  const [load, setLoad] = useState(true);
-  const [photo, setPhoto] = useState(null);
+const EditProduct = ({ toggleEdit, showEdit, product, title }) => {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [myCategory, setMyCategory] = useState([]);
   const { categories, isLoading } = useSelector((state) => state.category);
-  const { message, isError } = useSelector((state) => state.product);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [fileCount, setFileCount] = useState(0);
-  const [formFields, setFormFields] = useState({
-    name: "",
-    price: "",
-    description: "",
-    category: "",
-    color: "",
-  });
-  const { name, price, description, category, color } = formFields;
 
-  // handle the change
-  const handleImage = (e) => {
-    console.log(e.target.files.length);
-    const file = e.target.files[0];
-    const img = URL.createObjectURL(file);
-    setPhotoPreview(img);
-    setPhoto(file);
-  };
+  const [selectedFiles, setSelectedFiles] = useState(product.image != "" ?product.image.split(', '):[]);
+  const [fileCount, setFileCount] = useState(selectedFiles.length != 0? selectedFiles.length :0);
+  const [formFields, setFormFields] = useState({
+    name: `${product.name}`,
+    price: `${product.price}`,
+    description: `${product.description}`,
+    category: `${product.category}`,
+    color: `${product.color}`,
+  });
+  // console.log(formFields);
+  const { name, price, description, category, color } = formFields;
 
   // handle the change
   const handleChange = (e) => {
@@ -79,12 +69,12 @@ const EditProduct = () => {
   useEffect(() => {
     if (!isLoading) {
       setMyCategory(categories);
-      setLoad(false);
+      // setLoad(false);
       // Set Default category field
-      setFormFields((prevValue) => ({
-        ...prevValue,
-        category: `${categories[0]._id !== "" ? categories[0]._id : ""}`,
-      }));
+      // setFormFields((prevValue) => ({
+      //   ...prevValue,
+      //   category: `${categories[0]._id !== "" ? categories[0]._id : ""}`,
+      // }));
     }
   }, [categories, isLoading]);
 
@@ -108,7 +98,7 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const image = selectedFiles.join(", ");
-    const productData = {
+    const productData = {...product,
       name,
       price,
       description,
@@ -121,49 +111,46 @@ const EditProduct = () => {
       alert("please enter all the fields");
     } else {
       toastPromise(
-        dispatch(addProduct(productData)),
+        dispatch(updateProduct(productData)),
         "Submitting.....",
         "Added Successfully",
         "Error occurred!"
       );
-      setFormFields({
-        ...formFields,
-        name: "",
-        price: "",
-        description: "",
-        category: "",
-        color: "",
-      });
-      setSelectedFiles([]);
-      setFileCount(0);
+      // setFormFields({
+      //   ...formFields,
+      //   name: "",
+      //   price: "",
+      //   description: "",
+      //   category: "",
+      //   color: "",
+      // });
+      // setSelectedFiles([]);
+      // setFileCount(0);
       // alert("Product added");
     }
   };
   useEffect(() => {
-    if (isError) {
-      alert(message);
-    }
+
     dispatch(reset());
-  }, [isError, dispatch, message]);
+  }, [ dispatch]);
 
-  if (load) {
-    return <Spinner />;
-  } else {
     return (
-      <Modal>
-        <ModalHeader
-          className="bg-transparent"
+      <>
+        <Modal
+          isOpen={showEdit}
           toggle={() => toggleEdit()}
-        ></ModalHeader>
-        <ModalBody className="px-sm-5 mx-50 pb-5">
-          <div className="text-center mb-3">
-            <h3 className="mb-1"> {title}</h3>
-          </div>
-
-          <div className="card p-3" id="addProduct">
-            <Form className="mx-5">
-              <Row>
-                <Col
+          className="modal-dialog-centered modal-lg"
+        >
+          <ModalHeader
+            className="bg-transparent"
+            toggle={() => toggleEdit()}
+          ></ModalHeader>
+          <ModalBody className="px-sm-5 mx-50 pb-5">
+            <div className="text-center mb-2">
+              <h3 className="mb-1"> {title}</h3>
+            </div>
+            <Row tag="form" className="gy-1 pt-75">
+            <Col
                   md={12}
                   className="mb-3 d-flex flex-column align-items-center"
                 >
@@ -195,7 +182,6 @@ const EditProduct = () => {
                       : `${fileCount} Image Selected`}
                   </p>
                 </Col>
-
                 <Col className="mb-3" xs={12} md={6}>
                   <FormGroup>
                     <Label htmlFor="inputName" className="form-label">
@@ -285,31 +271,36 @@ const EditProduct = () => {
                     ></Input>
                   </FormGroup>
                 </Col>
-
-                <Col className="mb-3 text-end">
-                  <Button
-                    onClick={handleSubmit}
-                    type="submit"
-                    className="btn btn-dark"
-                  >
-                    Create
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
-
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </div>
-        </ModalBody>
-      </Modal>
+              <Col xs={12} className="text-center mt-2 pt-50">
+                <Button
+                  type="button"
+                  className="me-1"
+                  color="primary"
+                  onClick={handleSubmit}
+                >
+                  {title.split(" ")[0]}
+                </Button>
+                <Button
+                  type="reset"
+                  color="secondary"
+                  outline
+                  onClick={() => toggleEdit()}
+                >
+                  Discard
+                </Button>
+              </Col>
+            </Row>
+          </ModalBody>
+        </Modal>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </>
     );
   }
-};
 export default EditProduct;

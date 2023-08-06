@@ -62,6 +62,7 @@ export const updateProduct = createAsyncThunk(
   async (data, thunkApi) => {
     try {
       const token = thunkApi.getState().auth.user.token;
+      console.log(data)
       return productService.updateProduct(data, token);
     } catch (error) {
       const message =
@@ -164,12 +165,12 @@ export const productSlice = createSlice({
         state.message = action.payload;
         // Find the index of the updated record
         const updatedRecordIndex = state.products.findIndex(
-          (product) => product._id === action.meta.arg.id
+          (product) => product._id === action.payload._id
         );
         console.log(action);
         // If the updated record is found in the categories array, update it
         if (updatedRecordIndex !== -1) {
-          state.products[updatedRecordIndex] = action.payload;
+          state.products.splice(updatedRecordIndex,1,action.payload);
         }
       })
       .addCase(removeProduct.pending, (state) => {

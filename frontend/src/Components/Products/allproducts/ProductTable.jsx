@@ -47,10 +47,6 @@ const ProductTable = () => {
     }
   }, [products]);
 
-  // const onEdit = (id) => {
-  //   alert("Edit called");
-  // };
-
   const onEdit = (id) => {
     setloadingSpinner(true);
     dispatch(getSingleProduct(id))
@@ -163,7 +159,7 @@ const ProductTable = () => {
           <EditProduct
             toggleEdit={toggleEdit}
             showEdit={showEdit}
-            
+            product = {product}
             title={title}
           />
         ) : null}
