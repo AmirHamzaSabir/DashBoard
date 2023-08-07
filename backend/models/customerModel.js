@@ -1,17 +1,22 @@
-const mongoose = require('moongose');
-const customerScheme = mongoose.Scheme({
+const mongoose = require('mongoose');
+const customerScheme = mongoose.Schema({
     name :{
-        type:string,
-        required:true
+        type:String,
+        required:true,
     },
     address:{
-        type:string,
+        type:String,
         required:true,
     },
     email:{
-        type:Email,
+        type:String,
         required:[true,"Email is required"],
         unique:[true,"Email already exists"]
+    },
+    password:{
+        type: String,
+        required: [true, 'Please enter the password field'],
+
     },
     contactNumber:{
         type:Number,
@@ -19,7 +24,7 @@ const customerScheme = mongoose.Scheme({
 
     },
     active:{
-        type:boolean,
+        type:Boolean,
         default:false
     }, 
 });

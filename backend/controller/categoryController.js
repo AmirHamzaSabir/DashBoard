@@ -5,7 +5,7 @@ const addCategory = AsyncHandler(async (req, res) => {
   // get the category from the body
   const { category } = req.body;
   const check = await Category.findOne({ category: category });
-  console.log(check);
+
   if (!check) {
     if (req.user.role === 1 || req.user.role === 2) {
       const newCategory = await Category.create({

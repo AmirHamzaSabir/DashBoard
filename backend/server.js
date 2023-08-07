@@ -38,6 +38,10 @@ app.use('/api/payments/', require('./routes/paymentRoutes'));
 app.use('/api/shipping/', require('./routes/shippingRoutes'));
 // handle the payment 
 app.use('/api/invoice/', require('./routes/invoiceRoutes'));
+//handle the customer
+app.use('/api/customer/',require('./routes/customerRoutes'));
+//handle the country codes
+app.use('/api/codes/',require('./routes/deliveryRoutes'));
 // check for errors
 app.use(errorHandler)
 
