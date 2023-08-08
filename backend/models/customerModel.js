@@ -23,9 +23,9 @@ const customerScheme = mongoose.Schema({
         required:[true,"Number is required"],
 
     },
-    active:{
+    status:{
         type:Boolean,
-        default:false
+        default:true
     }, 
 });
 module.exports = mongoose.model("Customer",customerScheme);

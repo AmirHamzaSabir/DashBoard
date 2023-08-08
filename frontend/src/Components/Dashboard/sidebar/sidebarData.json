@@ -10,6 +10,11 @@
         "icon":"bi bi-person-fill"
     },
     {
+        "title":"Customer",
+        "path":"/user/customer",
+        "icon":"bi bi-person-fill"
+    },
+    {
         "title":"Category",
         "path":"/user/category",
         "icon":"bi bi-bookmark-fill"

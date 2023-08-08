@@ -18,21 +18,20 @@ import { ToastContainer, toast } from "react-toastify";
 // ** Third Party Components
 // import Select from 'react-select'
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../../features/auth/authSlice";
-import { toastPromise } from "../../UiElements/PromiseToast";
+import { updateCustomer } from "../../features/customer/customerSlice";
+import { toastPromise } from "../UiElements/PromiseToast";
 
-const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
+const EditCustomer = ({ customer, showEdit, toggleEdit, title = "Update" }) => {
   const dispatch = useDispatch();
+  console.log(customer);
   const [formFields, setFormFields] = useState({
-    name: `${user.name}`,
-    email: `${user.email}`,
-    password: `${user.password}`,
-    c_password: `${user.password}`,
-    m_number: `${user.m_number}`,
-    role: `${user.role}`,
+    name: `${customer.name}`,
+    email: `${customer.email}`,
+    contactNumber: `${customer.contactNumber}`,
+    status: `${customer.status}`,
   });
 
-  const { name, email, password, c_password, m_number, role } = formFields;
+  const { name, email, contactNumber, status } = formFields;
 
   const handleChange = (e) => {
     setFormFields((prevValue) => ({
@@ -43,16 +42,14 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = {...user,
+    const customerData = {...customer,
       name,
       email,
-      password,
-      m_number,
-      role: role === "undefined" ? 0 : role,
+      contactNumber,
+      status: status,
     };
-    console.log(userData)
     toastPromise(
-      dispatch(updateUser(userData)),
+      dispatch(updateCustomer(customerData)),
       "Saving Changes....",
       "Updated Successfully",
       "Error occured !"
@@ -87,6 +84,7 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
                   value={name}
                   onChange={handleChange}
                   placeholder="Username"
+                  disabled
                 />
               </FormGroup>
               <FormGroup className="col-md-6 col-xs-12">
@@ -106,36 +104,6 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
             </div>
             <div className="row">
               <FormGroup className="col-md-6 col-xs-12">
-                <Label for="password" className="form-label">
-                  Password
-                </Label>
-                <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={handleChange}
-                  placeholder="Password"
-                  disabled
-                />
-              </FormGroup>
-              <FormGroup className="col-md-6 col-xs-12">
-                <Label for="c_password" className="form-label">
-                  Confirm Password
-                </Label>
-                <Input
-                  type="password"
-                  id="c_password"
-                  name="c_password"
-                  value={password}
-                  onChange={handleChange}
-                  placeholder="Confirm Password"
-                  disabled
-                />
-              </FormGroup>
-            </div>
-            <div className="row">
-              <FormGroup className="col-md-6 col-xs-12">
                 <Label for="m_number" className="form-label">
                   Mobile Number
                 </Label>
@@ -143,14 +111,15 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
                   type="number"
                   id="m_number"
                   name="m_number"
-                  value={m_number}
+                  value={contactNumber}
                   onChange={handleChange}
                   placeholder="Mobile Number"
+                  disabled
                 />
               </FormGroup>
               <FormGroup className="col-md-6 col-xs-12">
                 <Label
-                  for="role"
+                  for="Status"
                   className="form-label"
                   style={{
                     fontSize: ".875rem",
@@ -158,18 +127,18 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
                     marginBottom: ".5rem",
                   }}
                 >
-                  Select Role
+                  Select Status
                 </Label>
                 <Input
                   type="select"
                   id="role"
-                  name="role"
-                  value={role}
+                  name="status"
+                  value={status}
                   onChange={handleChange}
                 >
-                  <option value={1}>Admin</option>
-                  <option value={0}>User</option>
-                  <option value={2}>Super Admin</option>
+                  <option value={true}>Active</option>
+                  <option value={false}>InActive</option>
+                  
                 </Input>
               </FormGroup>
             </div>
@@ -204,4 +173,4 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
   );
 };
 
-export default EditUser;
+export default EditCustomer;

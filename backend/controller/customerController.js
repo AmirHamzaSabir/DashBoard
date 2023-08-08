@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 
 const getAllCustomers = AsyncHandler(async (req, res) => {
   const customers = await Customer.find();
+  console.log(customers);
   res.status(200).json({ customers });
 });
 
@@ -37,7 +38,37 @@ const postCustomer = AsyncHandler(async (req, res) => {
   }
 });
 
+const getSingleCustomer = AsyncHandler(async (req, res) => {
+  const customer = await Customer.findById(req.params.id);
+  res.status(200).json({customer});
+})
+
+const updateCustomer = AsyncHandler(async(req,res)=>{
+  const user = req.user;
+  var response = null;
+if(user.role === 2 || user.role === 1){
+  const data = await Customer.findById(req.params.id);
+  if (data) {
+    response = await await Customer.findOneAndUpdate(
+      { _id: `${req.params.id}` },
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(response);
+  }else{
+      res.status(404);
+      throw new Error("Not Found");
+    }
+}
+else{
+  res.status(401);
+  throw new Error("You are not authorized");
+}
+})
+
 module.exports = {
   getAllCustomers,
   postCustomer,
+  getSingleCustomer,
+  updateCustomer
 };

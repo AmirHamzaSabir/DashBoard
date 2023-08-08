@@ -31,6 +31,7 @@ import ProfileView from "./Components/User/UserProfile/ProfileView";
 import Settings from "./Components/User/UserSetting/Settings";
 import { useSelector } from "react-redux";
 import { isUserLoggedIn } from "./authentication/UserAuthentication";
+import Customers from "./Components/Customers";
 function App() {
   console.log(isUserLoggedIn());
   return (
@@ -54,6 +55,7 @@ function App() {
               <Route exact path="/user" element={<UserList />}>
                 <Route index element={<List />} />
                 <Route path="/user/category" element={<MainCategoryCom />} />
+                <Route path="/user/customer" element={<Customers />} />
                 {/* <Route path='/user/category/:id' element={<Custome/>}/> */}
                 <Route path="/user/product" element={<MainProduct />} />
                 <Route path="/user/addproduct" element={<AddProdMain />} />
