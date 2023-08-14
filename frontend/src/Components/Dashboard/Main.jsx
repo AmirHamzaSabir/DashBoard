@@ -18,7 +18,7 @@ const Dashboard = () => {
   return (
     <>
     <div className='app'>
-      <Sidebar show={false}/>
+      <Sidebar show={false} name={"topLevel"}/>
       <div className='mainLayout'>
         <Header/>
         <Outlet/>

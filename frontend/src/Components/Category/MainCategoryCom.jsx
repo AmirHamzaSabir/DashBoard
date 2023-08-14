@@ -11,8 +11,9 @@ import {
 } from "../../features/categories/categorySlice";
 import Delete from "../UiElements/DeleteModal";
 import Spinner from "../Spinner/Spinner";
-import EditCategory from "./Model";
+import EditCategory from "./EditCategory";
 import SpinnerModal from "./SpinnerModal";
+import { getStatus } from "../../Functions/status";
 const MainCategoryCom = () => {
   const { categories, isError, message } = useSelector(
     (state) => state.category
@@ -68,6 +69,7 @@ const MainCategoryCom = () => {
     if (categories?.length > 0) {
       const allCategories = categories.map((category) => ({
         ...category,
+        status: getStatus(category.status),
         action: (
           <UpdateorDel onEdit={onEdit} onDelete={onDelete} id={category._id} />
         ),
@@ -84,6 +86,12 @@ const MainCategoryCom = () => {
         header: "CATEGORY",
         muiTableHeadCellProps: { sx: { color: "rgba(47,43,61,.78)" } },
         renderCell: ({ rowData }) => <span>{rowData.category}</span>,
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        muiTableHeadCellProps: { sx: { color: "rgba(47, 43, 61, .78)" } },
+        renderCell: ({ rowData }) => <span>getRoleName({rowData.role})</span>,
       },
       {
         accessorKey: "action",

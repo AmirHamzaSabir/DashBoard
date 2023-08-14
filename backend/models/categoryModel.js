@@ -4,6 +4,10 @@ const categorySchema = mongoose.Schema({
         type: String, 
         required:[true,'This field is required'],
         unique:[true,'This category is already present']
+    },
+    status:{
+        type:Boolean,
+        default:true
     }
 }, {
     timestamps:true

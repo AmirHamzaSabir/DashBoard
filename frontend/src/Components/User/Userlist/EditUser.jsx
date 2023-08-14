@@ -30,9 +30,10 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
     c_password: `${user.password}`,
     m_number: `${user.m_number}`,
     role: `${user.role}`,
+    status : `${user.status}`,
   });
 
-  const { name, email, password, c_password, m_number, role } = formFields;
+  const { name, email, password, c_password, m_number, role ,status} = formFields;
 
   const handleChange = (e) => {
     setFormFields((prevValue) => ({
@@ -48,6 +49,7 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
       email,
       password,
       m_number,
+      status,
       role: role === "undefined" ? 0 : role,
     };
     console.log(userData)
@@ -120,22 +122,6 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
                 />
               </FormGroup>
               <FormGroup className="col-md-6 col-xs-12">
-                <Label for="c_password" className="form-label">
-                  Confirm Password
-                </Label>
-                <Input
-                  type="password"
-                  id="c_password"
-                  name="c_password"
-                  value={password}
-                  onChange={handleChange}
-                  placeholder="Confirm Password"
-                  disabled
-                />
-              </FormGroup>
-            </div>
-            <div className="row">
-              <FormGroup className="col-md-6 col-xs-12">
                 <Label for="m_number" className="form-label">
                   Mobile Number
                 </Label>
@@ -148,6 +134,34 @@ const EditUser = ({ user, showEdit, toggleEdit, title = "Update" }) => {
                   placeholder="Mobile Number"
                 />
               </FormGroup>
+              
+            </div>
+            <div className="row">
+            <FormGroup className="col-md-6 col-xs-12">
+                <Label
+                  for="Status"
+                  className="form-label"
+                  style={{
+                    fontSize: ".875rem",
+                    fontWeight: "400",
+                    marginBottom: ".5rem",
+                  }}
+                >
+                  Select Status
+                </Label>
+                <Input
+                  type="select"
+                  id="role"
+                  name="status"
+                  value={status}
+                  onChange={handleChange}
+                >
+                  <option value={true}>Active</option>
+                  <option value={false}>InActive</option>
+                  
+                </Input>
+              </FormGroup>
+              
               <FormGroup className="col-md-6 col-xs-12">
                 <Label
                   for="role"

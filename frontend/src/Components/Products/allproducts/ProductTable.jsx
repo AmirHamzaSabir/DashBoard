@@ -13,6 +13,7 @@ import UpdateorDel from "../../User/Userlist/UpdateorDel";
 import SpinnerModal from "../../Category/SpinnerModal";
 import Delete from "../../UiElements/DeleteModal";
 import EditProduct from "../addproduct/EditProduct";
+import { getStatus } from "../../../Functions/status";
 const ProductTable = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const ProductTable = () => {
     if (products?.length > 0) {
       const allProducts = products.map((product) => ({
         ...product,
+        status: getStatus(product.status),
         action: (
           <UpdateorDel id={product._id} onEdit={onEdit} onDelete={onDelete} />
         ),
@@ -125,6 +127,24 @@ const ProductTable = () => {
             }}
           ></div>
         ),
+      },
+      {
+        accessorKey: "size",
+        header: "Size",
+        muiTableHeadCellProps: { sx: { color: "rgba(47, 43, 61, .78)" } },
+        
+      },
+      {
+        accessorKey: "quantity",
+        header: "Quantity",
+        muiTableHeadCellProps: { sx: { color: "rgba(47, 43, 61, .78)" } },
+        
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        muiTableHeadCellProps: { sx: { color: "rgba(47, 43, 61, .78)" } },
+        renderCell: ({ rowData }) => <span>getRoleName({rowData.role})</span>,
       },
       {
         accessorKey: "action",

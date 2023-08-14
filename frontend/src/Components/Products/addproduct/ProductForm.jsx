@@ -7,10 +7,10 @@ import { FormGroup, Label, Input, Button, Form, Row, Col } from "reactstrap";
 import { Upload } from "react-feather";
 import { toastPromise } from "../../UiElements/PromiseToast";
 import { ToastContainer } from "react-toastify";
+import { allSizes } from "../../../Functions/size";
+
 const ProductForm = () => {
   const [load, setLoad] = useState(true);
-  const [photo, setPhoto] = useState(null);
-  const [photoPreview, setPhotoPreview] = useState(null);
   const [myCategory, setMyCategory] = useState([]);
   const { categories, isLoading } = useSelector((state) => state.category);
   const { message, isError } = useSelector((state) => state.product);
@@ -22,8 +22,10 @@ const ProductForm = () => {
     description: "",
     category: "",
     color: "",
+    quantity:"",
+    size:""
   });
-  const { name, price, description, category, color } = formFields;
+  const { name, price, description, category, color,size ,quantity} = formFields;
 
   // handle the change
   const handleChange = (e) => {
@@ -61,10 +63,12 @@ const ProductForm = () => {
       setMyCategory(categories);
       setLoad(false);
       // Set Default category field
-      setFormFields((prevValue) => ({
-        ...prevValue,
-        category: `${categories[0]._id !== "" ? categories[0]._id : ""}`,
-      }));
+      if(myCategory.length > 0){
+        setFormFields((prevValue) => ({
+          ...prevValue,
+          category: `${categories[0]._id !== "" ? categories[0]._id : ""}`,
+        }));
+      }
     }
   }, [categories, isLoading]);
 
@@ -95,6 +99,7 @@ const ProductForm = () => {
       category,
       color,
       image,
+      quantity
     };
     console.log(productData);
     if (!name || !price || !description || !category || !color || !image) {
@@ -223,6 +228,46 @@ const ProductForm = () => {
                 <Input
                   name="color"
                   value={color}
+                  onChange={handleChange}
+                  type="text"
+                  className="form-control"
+                  id="inputCity"
+                />
+              </FormGroup>
+            </Col>
+            <Col className="mb-3" xs={12} md={6}>
+              <FormGroup>
+                <Label htmlFor="size" className="form-label">
+                  Size
+                </Label>
+                <Input
+                  name="size"
+                  value={size}
+                  onChange={handleChange}
+                  type="select"
+                  className="form-control"
+                  id="size"
+                >
+                    {allSizes && allSizes.length > 0 ? (
+                    allSizes.map((name,index) => (
+                      <option key={index} value={name}>
+                        {name}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No Size Available</option>
+                  )}
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col className="mb-3" xs={12} md={6}>
+              <FormGroup>
+                <Label htmlFor="qunatity" className="form-label">
+                  Quantity
+                </Label>
+                <Input
+                  name="quantity"
+                  value={quantity}
                   onChange={handleChange}
                   type="text"
                   className="form-control"

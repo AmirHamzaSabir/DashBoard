@@ -21,9 +21,21 @@ const productSchema = mongoose.Schema({
         type: String,
         required:[true,'Please enter this field']
     },
+    status:{
+        type:Boolean,
+        default:true
+    }, 
     image:{
         type: String,
         required:[true,'Please enter this field']
+    },
+    size:{
+        type: String,
+        default:""
+    },
+    quantity:{
+        type: Number,
+        default:1
     }
 })
 

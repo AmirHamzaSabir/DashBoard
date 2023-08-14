@@ -40,6 +40,7 @@ const getSingleOrder = AsyncHandler(async (req, res) => {
 const updateStatus = AsyncHandler(async (req, res) => {
     const p_id = req.params.id;
     const product = await Order.findById(p_id);
+    console.log(req.body)
     if (product) {
         const updatedProduct = await Order.findByIdAndUpdate(p_id, {
             status: req.body.status

@@ -9,6 +9,7 @@ import UpdateorDel from "./UpdateorDel";
 import EditUser from "./EditUser";
 import Delete from "../../UiElements/DeleteModal";
 import SpinnerModal from "../../Category/SpinnerModal";
+import { getStatus } from "../../../Functions/status";
 const List = () => {
   const [data, setData] = useState([]);
   const [title, setTitle] = useState("Add User");
@@ -68,6 +69,7 @@ const List = () => {
       const modifiedData = allUsers.map((user) => ({
         ...user,
         role: getRoleName(Number(user.role)),
+        status: getStatus(user.status),
         action: (
           <UpdateorDel onEdit={onEdit} onDelete={onDelete} id={user._id} />
         ),
@@ -114,6 +116,12 @@ const List = () => {
         header: "Mobile",
         muiTableHeadCellProps: { sx: { color: "rgba(47, 43, 61, .78)" } },
         renderCell: ({ rowData }) => <span>{rowData.m_number}</span>,
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        muiTableHeadCellProps: { sx: { color: "rgba(47, 43, 61, .78)" } },
+        renderCell: ({ rowData }) => <span>getRoleName({rowData.role})</span>,
       },
       {
         accessorKey: "action",

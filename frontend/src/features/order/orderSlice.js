@@ -45,9 +45,11 @@ export const getSingleOrder = createAsyncThunk('order/get-single', async (order_
         return thunkApi.rejectWithValue(message);
     }
 })
-export const updateStatus = createAsyncThunk('order/update-status', async (order_id,status,thunkApi) => {
+export const updateStatus = createAsyncThunk('order/update-status', async (data,thunkApi) => {
     try {
-        return await orderService.updateStatus(order_id,status);
+        console.log(data)
+        // console.log(status)
+        return await orderService.updateStatus(data);
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
         return thunkApi.rejectWithValue(message);
@@ -106,10 +108,10 @@ export const orderSlice = createSlice({
             .addCase(getSingleOrder.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orders.push(action.payload);
+                state.orders = action.payload;
             })
             .addCase(updateStatus.pending, (state) => {
-                state.isLoading = true;
+                state.isLoading = false;
             })
             .addCase(updateStatus.rejected, (state, action) => {
                 state.isLoading = false;
@@ -120,7 +122,7 @@ export const orderSlice = createSlice({
             .addCase(updateStatus.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.orders.push(action.payload);
+                state.orders = action.payload;
             })
         .addCase(getSales.pending, (state) => {
                 state.isLoading = true;

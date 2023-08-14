@@ -18,6 +18,7 @@ import {
 import { Upload } from "react-feather";
 import { toastPromise } from "../../UiElements/PromiseToast";
 import { ToastContainer } from "react-toastify";
+import { allSizes } from "../../../Functions/size";
 const EditProduct = ({ toggleEdit, showEdit, product, title }) => {
   const [photoPreview, setPhotoPreview] = useState(null);
   const [myCategory, setMyCategory] = useState([]);
@@ -31,9 +32,11 @@ const EditProduct = ({ toggleEdit, showEdit, product, title }) => {
     description: `${product.description}`,
     category: `${product.category}`,
     color: `${product.color}`,
+    size: `${product.size}`,
+    quantity: `${product.quantity}`
   });
   // console.log(formFields);
-  const { name, price, description, category, color } = formFields;
+  const { name, price, description, category, color,size ,quantity} = formFields;
 
   // handle the change
   const handleChange = (e) => {
@@ -105,6 +108,8 @@ const EditProduct = ({ toggleEdit, showEdit, product, title }) => {
       category,
       color,
       image,
+      quantity,
+      size
     };
     console.log(productData);
     if (!name || !price || !description || !category || !color || !image) {
@@ -245,6 +250,46 @@ const EditProduct = ({ toggleEdit, showEdit, product, title }) => {
                     <Input
                       name="color"
                       value={color}
+                      onChange={handleChange}
+                      type="text"
+                      className="form-control"
+                      id="inputCity"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col className="mb-3" xs={12} md={6}>
+              <FormGroup>
+                <Label htmlFor="size" className="form-label">
+                  Size
+                </Label>
+                <Input
+                  name="size"
+                  value={size}
+                  onChange={handleChange}
+                  type="select"
+                  className="form-control"
+                  id="size"
+                >
+                    {allSizes && allSizes.length > 0 ? (
+                    allSizes.map((name,index) => (
+                      <option key={index} value={name}>
+                        {name}
+                      </option>
+                    ))
+                  ) : (
+                    <option value="">No Size Available</option>
+                  )}
+                </Input>
+              </FormGroup>
+            </Col>
+            <Col className="mb-3" xs={12} md={6}>
+                  <FormGroup>
+                    <Label htmlFor="inputCity" className="form-label">
+                      Quantity
+                    </Label>
+                    <Input
+                      name="quantity"
+                      value={quantity}
                       onChange={handleChange}
                       type="text"
                       className="form-control"

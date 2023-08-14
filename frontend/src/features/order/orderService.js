@@ -18,8 +18,8 @@ const getSingleOrder = async (order_id) => {
     return response.data;
 }
 
-const updateStatus = async (order_id, status) => {
-    const response = await axios.put(`${URL}/update-status/${order_id}`, status);
+const updateStatus = async (data) => {
+    const response = await axios.put(`${URL}/update-status/${data.id}`, data);
     return response.data
 }
 

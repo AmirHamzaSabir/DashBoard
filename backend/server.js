@@ -42,6 +42,12 @@ app.use('/api/invoice/', require('./routes/invoiceRoutes'));
 app.use('/api/customer/',require('./routes/customerRoutes'));
 //handle the country codes
 app.use('/api/codes/',require('./routes/deliveryRoutes'));
+//handle the sitefeature
+app.use('/api/sitefeature/',require('./routes/webSiteRoutes'));
+//handle the ticket
+app.use('/api/ticket/',require('./routes/ticketRoutes'));
+//handle the country 
+app.use('/api/paymentGW/',require('./routes/paymentGWRoutes'));
 // check for errors
 app.use(errorHandler)
 
