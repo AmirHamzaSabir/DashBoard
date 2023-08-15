@@ -1,6 +1,6 @@
 const AsyncHandler = require('express-async-handler');
 const stripe = require('stripe')('sk_test_51MycIqD2171rDQ1bM2Vo43LraZJVqjoKBvTbP7yl52C5ShEqWmsSrT7kktdyrtUAuRwrOD8HRmqXnfFOXPULc7Xr00A9NYeUOU');
-
+const Refund = require('../models/refundModel');
 const handleRefund = AsyncHandler(async (req, res) => {
     const {
         refundAmount,
@@ -35,6 +35,22 @@ const handleRefund = AsyncHandler(async (req, res) => {
     }
 });
 
+const addRefund = AsyncHandler(async (req, res) => {
+        const refund = await Refund.create({
+            ...req.body
+        });
+        res.status(200).json(refund)
+    
+});
+const getAllRefunds = AsyncHandler(async(req,res)=>{
+    const refunds = await Refund.find();
+    res.status(200).json(refunds);
+});
+
+
+
 module.exports = {
     handleRefund,
+    addRefund,
+    getAllRefunds
 };

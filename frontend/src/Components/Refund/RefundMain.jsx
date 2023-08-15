@@ -4,7 +4,12 @@ import SearchRefund from "./searchrefund/SearchRefund";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { updateStatus } from "../../features/order/orderSlice";
+import { addRefund } from "../../features/refund/refundSlice";
+import { toastPromise } from "../UiElements/PromiseToast";
+import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
 const RefundMain = () => {
+    const dispatch = useDispatch()
   const { id } = useParams();
   const [formFields, setFormFields] = useState({
     orderNumber: `${id !== undefined ? id : ""}`,
@@ -21,9 +26,9 @@ const RefundMain = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     toastPromise(
-      dispatch(updateStatus({ id, status })),
+      dispatch(addRefund({ orderNumber,refundAmount,bankAccountNumber })),
       "Saving Changes....",
-      "Updated Successfully",
+      "Added Successfully",
       "Error occured !"
     );
   };
@@ -96,6 +101,14 @@ const RefundMain = () => {
               </form>
               {/* <SearchRefund/> */}
             </div>
+            <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           </div>
         </div>
       </div>
