@@ -22,8 +22,7 @@ const Detailheader = () => {
   );
   const { products, p_isLoading } = useSelector((state) => state.product);
   const { allUsers, u_isLoading } = useSelector((state) => state.auth);
-  const [selectedStatus, setSelectedStatus] = useState(orders.status);
-  console.log(orders);
+
   useEffect(() => {
     if (isError) {
       alert(message);
@@ -56,9 +55,7 @@ const Detailheader = () => {
     dispatch(getSingleOrder(id));
     dispatch(getProducts());
     dispatch(getAllUsers());
-    if (orders.status !== "") {
-      setSelectedStatus(orders.status);
-    }
+
   }, [message, dispatch, id]);
 
   const getProduct = (product_id) => {
@@ -120,12 +117,12 @@ const Detailheader = () => {
             >
               <option value={"new"}>New</option>
               <option value={"confirm"}>Confirmed</option>
-              <option value={"pack"}>Packed</option>
-              <option value={"ship"}>Shipped</option>
-              <option value={"delieve"}>Delivered</option>
+              <option value={"packed"}>Packed</option>
+              <option value={"shipped"}>Shipped</option>
+              <option value={"delievered"}>Delivered</option>
               <option value={"pending"}>Pending</option>
               <option value={"cancel"}>Cancelled</option>
-              <option value={"fail"}>Failed</option>
+              <option value={"failed"}>Failed</option>
               <option value={"return"}>Returned</option>
             </Input>
             <div className="col-12 mb-3 w-100">

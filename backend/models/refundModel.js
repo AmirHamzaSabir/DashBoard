@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const refundScheme = mongoose.Schema({
-    bankReferenceNumber:{
+    bankAccountNumber:{
         type:'string',
         required: true
     },
@@ -8,7 +8,7 @@ const refundScheme = mongoose.Schema({
         type:'number',
         required:true
     },
-    referenceNumber:{
+    orderNumber:{
         type:mongoose.Schema.ObjectId,
         required:true,
         ref: 'Order'

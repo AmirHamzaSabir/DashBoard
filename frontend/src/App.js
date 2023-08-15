@@ -67,6 +67,8 @@ function App() {
                 <Route path="/user/refund" element={<RefundMain />} />
                 <Route path="/user/orderdetail" element={<ViewOrderDetail />} />
                 <Route path="/user/order/refund" element={<RefundMain />} />
+                <Route path="/user/order/refund/:id" element={<RefundMain />} />
+                <Route path="/user/order/shipping/:id" element={<ViewShipping />} />
                 <Route path="/user/order/shipping" element={<ViewShipping />} />
                 <Route path="/user/order/uploadinvoice" element={<Upload />} />
                 <Route path="/user/profile" element={<ProfileView />} />

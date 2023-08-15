@@ -16,6 +16,11 @@ const orderSchema = mongoose.Schema({
         type: String,
         required: true,
         default:'pending'
+    },
+    refundId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:false,
+        ref:'Refund'
     }
 })
 
