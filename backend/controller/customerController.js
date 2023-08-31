@@ -1,11 +1,47 @@
 const AsyncHandler = require("express-async-handler");
 const Customer = require("../models/customerModel");
 const bcrypt = require("bcrypt");
+const { paginateArray } = require("../customFunctons/functions");
 
 const getAllCustomers = AsyncHandler(async (req, res) => {
   const customers = await Customer.find();
   console.log(customers);
   res.status(200).json({ customers });
+});
+const getCustomersChunk = AsyncHandler(async (req, res) => {
+  const users = await Customer.find();
+  const {
+    q = '',
+    page = 1,
+    perPage = 10,
+    sort = 'asc',
+    status = null,
+    sortColumn = 'name'
+  } = req.body
+
+  /* eslint-disable  */
+  const queryLowered = q.toLowerCase()
+
+  const dataAsc = users.sort((a, b) => (a[sortColumn] < b[sortColumn] ? -1 : 1))
+
+  const dataToFilter = sort === 'asc' ? dataAsc : dataAsc.reverse()
+
+  const filteredData = dataToFilter.filter(
+    user => {
+      return  (user.email.toLowerCase().includes(queryLowered) ||
+      user.name.toLowerCase().includes(queryLowered) ) &&
+    user.status === (status === false ? status :(status || user.status))
+    }
+     
+  )
+
+  /* eslint-enable  */
+    const response = {
+      total: filteredData.length,
+      users: paginateArray(filteredData, perPage, page)
+    }
+    res.status(200).json(response)
+ 
 });
 
 const postCustomer = AsyncHandler(async (req, res) => {
@@ -22,6 +58,7 @@ const postCustomer = AsyncHandler(async (req, res) => {
           ...req.body,
           password: hashedPassword,
         });
+        delete password;
         res.status(200).json({ customer });
       } else {
         console.log(customer);
@@ -40,12 +77,13 @@ const postCustomer = AsyncHandler(async (req, res) => {
 
 const getSingleCustomer = AsyncHandler(async (req, res) => {
   const customer = await Customer.findById(req.params.id);
-  res.status(200).json({customer});
+  res.status(200).json(customer);
 })
 
 const updateCustomer = AsyncHandler(async(req,res)=>{
   const user = req.user;
   var response = null;
+  console.log(req.body)
 if(user.role === 2 || user.role === 1){
   const data = await Customer.findById(req.params.id);
   if (data) {
@@ -65,10 +103,17 @@ else{
   throw new Error("You are not authorized");
 }
 })
+const removeCustomer = AsyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const deletedUser = await Customer.deleteOne({ _id: id });
+  res.status(200).json(deletedUser);
+});
 
 module.exports = {
   getAllCustomers,
   postCustomer,
   getSingleCustomer,
-  updateCustomer
+  updateCustomer,
+  getCustomersChunk,
+  removeCustomer
 };

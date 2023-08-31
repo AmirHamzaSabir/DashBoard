@@ -31,7 +31,7 @@ const productSchema = mongoose.Schema({
     },
     size:{
         type: String,
-        default:""
+        default:"N/A"
     },
     quantity:{
         type: Number,

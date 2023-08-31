@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/get-users', getUsers);
+router.get('/get-users',AuthMiddleware, getUsers);
 router.post('/get-users-chunk', getUsersChunk);
 //new route
 router.get('/get-user/:id', getUserById);

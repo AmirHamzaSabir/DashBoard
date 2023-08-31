@@ -1,6 +1,7 @@
 const AsyncHandler = require('express-async-handler');
 const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
+const { paginateArray } = require('../customFunctons/functions');
 
 
 const addProduct = AsyncHandler(async (req, res) => {
@@ -16,6 +17,42 @@ const getProducts = AsyncHandler(async(req,res)=>{
     const products = await Product.find();
     res.json(products);
 });
+
+const getProductsChunk = AsyncHandler(async (req, res) => {
+    const users = await Product.find();
+    const {
+      q = '',
+      page = 1,
+      perPage = 10,
+      sort = 'asc',
+      status = null,
+      sortColumn = 'name'
+    } = req.body
+  
+    /* eslint-disable  */
+    const queryLowered = q.toLowerCase()
+  
+    const dataAsc = users.sort((a, b) => (a[sortColumn] < b[sortColumn] ? -1 : 1))
+  
+    const dataToFilter = sort === 'asc' ? dataAsc : dataAsc.reverse()
+  
+    const filteredData = dataToFilter.filter(
+      user => {
+        return  (user.name.toLowerCase().includes(queryLowered) ||
+        user.description.toLowerCase().includes(queryLowered) ) &&
+      user.status === (status === false ? status :(status || user.status))
+      }
+       
+    )
+  
+    /* eslint-enable  */
+      const response = {
+        total: filteredData.length,
+        users: paginateArray(filteredData, perPage, page)
+      }
+      res.status(200).json(response)
+   
+  });
 
 const getProduct = AsyncHandler(async(req,res)=>{
     const id = req.params.id;
@@ -55,5 +92,6 @@ module.exports = {
     getProducts,
     getProduct,
     updateProduct,
-    removeProduct
+    removeProduct,
+    getProductsChunk
 }

@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please enter the password field'],
     },
-    m_number: {
+    contactNumber: {
         type: String,
         required: false,
         default:'No Mobile Number Available'

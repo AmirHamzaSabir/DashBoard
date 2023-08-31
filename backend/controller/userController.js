@@ -2,8 +2,11 @@ const AsyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
+const jwtRefreshToken = process.env.JWT_REFRESHTOKEN;
+const jwtExpireTime = process.env.JWT_EXPIRETIME;
+const jwtRefreshTokenExpireTime = process.env.JWT_REFRESHTOKENEXPIRETIME;
 const User = require("../models/userModel");
-const { paginateArray } = require("../customFunctons/functions");
+const { paginateArray, roleText } = require("../customFunctons/functions");
 const registerUser = AsyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   if (!name && !email && !password) {
@@ -36,7 +39,7 @@ const registerUser = AsyncHandler(async (req, res) => {
 
 const loginUser = AsyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  
   if (!email && !password) {
     res.status(400);
     throw new Error("Please fill out all the fields");
@@ -50,6 +53,7 @@ const loginUser = AsyncHandler(async (req, res) => {
     throw new Error("No User Found");
   }
   if (email && (await bcrypt.compare(password, checkUser.password))) {
+    const role = roleText(checkUser.role)
     const user = {
       id: checkUser._id,
       fullName: checkUser.name,
@@ -57,7 +61,7 @@ const loginUser = AsyncHandler(async (req, res) => {
       password: checkUser.password,
       avatar: "@src/assets/images/portrait/small/avatar-s-11.jpg",
       email: checkUser.email,
-      role: "admin",
+      role: role,
       ability: [
         {
           action: "manage",
@@ -68,36 +72,18 @@ const loginUser = AsyncHandler(async (req, res) => {
         eCommerceCartItemsCount: 5,
       },
     };
-    const jwtConfig = {
-      loginEndpoint: "http://localhost:3001/api/users/login",
-      registerEndpoint: "/jwt/register",
-      refreshEndpoint: "/jwt/refresh-token",
-      logoutEndpoint: "/jwt/logout",
+    // console.log(user);
 
-      // ** This will be prefixed in authorization header with token
-      // ? e.g. Authorization: Bearer <token>
-      tokenType: "Bearer",
-
-      // ** Value of this property will be used as key to store JWT token in storage
-      storageTokenKeyName: "accessToken",
-      storageRefreshTokenKeyName: "refreshToken",
-      secret: "dd5f3089-40c3-403d-af14-d0c228b05cb4",
-      refreshTokenSecret: "7c4c1c50-3230-45bf-9eae-c9b2e401c767",
-      expireTime: "10m",
-      refreshTokenExpireTime: "10m",
-    };
-
-    const accessToken = jwt.sign({ id: user.id }, jwtConfig.secret, {
-      expiresIn: jwtConfig.expireTime,
+    const accessToken = jwt.sign({ id: user.id }, jwtSecret, {
+      expiresIn: jwtExpireTime,
     });
     const refreshToken = jwt.sign(
       { id: user.id },
-      jwtConfig.refreshTokenSecret,
+      jwtRefreshToken,
       {
-        expiresIn: jwtConfig.refreshTokenExpireTime,
+        expiresIn: jwtRefreshTokenExpireTime,
       }
     );
-
     const userData = { ...user };
 
     delete userData.password;
@@ -107,13 +93,6 @@ const loginUser = AsyncHandler(async (req, res) => {
       refreshToken,
     };
     res.status(200).json(response);
-    // res.status(200).json({
-    //   id: checkUser._id,
-    //   name: checkUser.name,
-    //   email: checkUser.email,
-    //   role: checkUser.role,
-    //   token: generateToken(checkUser._id),
-    // });
   } else {
     res.status(401);
     throw new Error("Invalid Credentials");
@@ -124,8 +103,6 @@ const getUsers = AsyncHandler(async (req, res) => {
   const users = await User.find();
   res.json(users);
 });
-
-// const paginateArray = (array, perPage, page) => array.slice((page - 1) * perPage, page * perPage)
 
 const getUsersChunk = AsyncHandler(async (req, res) => {
   const users = await User.find();
@@ -146,10 +123,9 @@ const getUsersChunk = AsyncHandler(async (req, res) => {
   const dataAsc = users.sort((a, b) => (a[sortColumn] < b[sortColumn] ? -1 : 1))
 
   const dataToFilter = sort === 'asc' ? dataAsc : dataAsc.reverse()
-  console.log(dataToFilter[0]);
+
   const filteredData = dataToFilter.filter(
     user => {
-      console.log(user.role === role)
       return  (user.email.toLowerCase().includes(queryLowered) ||
       user.name.toLowerCase().includes(queryLowered) ) &&
     user.role === (role === 0 ? role : (role || user.role)) &&
@@ -157,23 +133,12 @@ const getUsersChunk = AsyncHandler(async (req, res) => {
     }
      
   )
-  // const filteredData = dataToFilter.filter(
-  //   user =>
-  //     (user.email.toLowerCase().includes(queryLowered) ||
-  //       user.name.toLowerCase().includes(queryLowered) ) &&
-  //     user.role === (role || user.role) &&
-  //     user.status === (status || user.status)
-  // )
+
   /* eslint-enable  */
-  console.log(filteredData.length)
-  console.log(role)
-  
     const response = {
       total: filteredData.length,
       users: paginateArray(filteredData, perPage, page)
     }
-  console.log(paginateArray(filteredData, perPage, page))
-
     res.status(200).json(response)
  
 });
@@ -206,20 +171,21 @@ const generateToken = (id) => {
 const addNewUser = AsyncHandler(async (req, res) => {
   const user = req.user;
   if (user.role === 2) {
-    const { name, email, password, m_number, role } = req.body;
+    const { name, email, password, contactNumber, role } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     const newUser = await User.create({
       name,
       email,
-      password,
-      m_number,
+      password:hashedPassword,
+      contactNumber,
       role,
     });
     res.json({
       _id: newUser._id,
       name: newUser.name,
       email: newUser.email,
-      password: newUser.password,
-      m_number: newUser.m_number,
+      contactNumber: newUser.contactNumber,
       role: newUser.role,
     });
   } else {
@@ -244,6 +210,7 @@ const updateUser = AsyncHandler(async (req, res) => {
         { $set: req.body },
         { new: true }
       );
+      delete response.password;
       res.status(200).json(response);
     } else {
       res.status(404);

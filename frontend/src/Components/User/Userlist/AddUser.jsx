@@ -21,7 +21,7 @@ const AddUser = () => {
     password: "",
     c_password: "",
     m_number: "",
-    role: 0,
+    role: 0
   });
 
   const { name, email, password, c_password, m_number, role } = formFields;
