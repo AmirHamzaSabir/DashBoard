@@ -21,6 +21,11 @@ const orderSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required:false,
         ref:'Refund'
+    },
+    refundId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:false,
+        ref:'Shipping'
     }
 })
 
