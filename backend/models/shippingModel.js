@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const shippingSchema = mongoose.Schema({
+const shippingSchema = new mongoose.Schema({
     name:{
         type:String,
         required:[true,'Please enter this field'],
@@ -15,4 +15,4 @@ const shippingSchema = mongoose.Schema({
     
 })
 
-module.exports = mongoose.model('Shipping',shippingSchema)
+module.exports = shippingSchema;

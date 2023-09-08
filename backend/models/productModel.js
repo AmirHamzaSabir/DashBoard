@@ -1,4 +1,16 @@
 const mongoose = require('mongoose');
+
+const attributeSchema = new mongoose.Schema({
+    columnName: {
+      type: String,
+      required: false,
+    },
+    columnValue: {
+      type: String,
+      required: false,
+    },
+  })
+
 const productSchema = mongoose.Schema({
     name:{
         type:String,
@@ -18,7 +30,7 @@ const productSchema = mongoose.Schema({
         required: [true,'Please enter this field']
     },
     color:{
-        type: String,
+        type: [String],
         required:[true,'Please enter this field']
     },
     status:{
@@ -29,9 +41,9 @@ const productSchema = mongoose.Schema({
         type: String,
         required:[true,'Please enter this field']
     },
-    size:{
-        type: String,
-        default:"N/A"
+    attribute:{
+        type: [attributeSchema],
+        required:false
     },
     quantity:{
         type: Number,

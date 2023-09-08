@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const refundScheme = require('./refundModel');
+const shippingSchema = require('./shippingModel');
 
 
 const orderSchema = mongoose.Schema({
@@ -7,25 +9,23 @@ const orderSchema = mongoose.Schema({
         required: true,
         ref:'Product',
     },
-    user: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref:'User',
+        ref:'Customer',
     },
     status: {
         type: String,
         required: true,
         default:'pending'
     },
-    refundId:{
-        type: mongoose.Schema.Types.ObjectId,
-        required:false,
-        ref:'Refund'
+    refundDetails:{
+        type: refundScheme,
+        required:false
     },
-    refundId:{
-        type: mongoose.Schema.Types.ObjectId,
-        required:false,
-        ref:'Shipping'
+    shippingDetails:{
+        type: shippingSchema,
+        required:false
     }
 })
 

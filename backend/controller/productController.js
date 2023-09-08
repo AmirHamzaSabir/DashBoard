@@ -1,14 +1,10 @@
 const AsyncHandler = require('express-async-handler');
 const Product = require('../models/productModel');
-const Category = require('../models/categoryModel');
 const { paginateArray } = require('../customFunctons/functions');
 
 
 const addProduct = AsyncHandler(async (req, res) => {
-    const { name, price, category, description, color,image } = req.body;  
-        const product = await Product.create({
-            name, price, category, description, color,image
-        });
+        const product = await Product.create(req.body);
         res.status(200).json(product)
     
 });
@@ -66,7 +62,7 @@ const updateProduct = AsyncHandler(async(req,res)=>{
  if(user.role === 2 || user.role === 1){
     const data = await Product.findById(req.params.id);
     if (data) {
-      response = await await Product.findOneAndUpdate(
+      response = await Product.findOneAndUpdate(
         { _id: `${req.params.id}` },
         { $set: req.body },
         { new: true }

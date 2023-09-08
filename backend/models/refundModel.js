@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const refundScheme = mongoose.Schema({
+const refundScheme = new mongoose.Schema({
     bankAccountNumber:{
         type:'string',
         required: true
@@ -14,4 +14,4 @@ const refundScheme = mongoose.Schema({
         ref: 'Order'
     }
 })
-module.exports = mongoose.model("Refund",refundScheme);
+module.exports = refundScheme;

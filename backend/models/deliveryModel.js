@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const deliveryModel = mongoose.Schema({
-    countryCode:{
+    pinCode:{
         type:String,
         required: true,
+    },
+    district : {
+        type : String,
+        required: true
     },
     countryName:{
         type:String,
@@ -14,7 +18,7 @@ const deliveryModel = mongoose.Schema({
     },
     codFee:{
         type:String,
-        required: true,
+        required: false,
     }
 
 });
