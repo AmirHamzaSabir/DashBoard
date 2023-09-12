@@ -1,5 +1,6 @@
 const AsyncHandler = require("express-async-handler");
 const Category = require("../models/categoryModel");
+const { paginateArray } = require("../customFunctons/functions");
 
 const addCategory = AsyncHandler(async (req, res) => {
   // get the category from the body
@@ -22,12 +23,49 @@ const addCategory = AsyncHandler(async (req, res) => {
 });
 
 const getCategories = AsyncHandler(async (req, res) => {
+  console.log("Called All categories")
   const categories = await Category.find();
   res.status(200).json({
     categories,
   });
 });
+const getCategoryChunk = AsyncHandler(async (req, res) => {
+  const users = await Category.find();
+  const {
+    q = '',
+    page = 1,
+    perPage = 10,
+    sort = 'asc',
+    status = null,
+    sortColumn = 'name'
+  } = req.body
+
+  /* eslint-disable  */
+  const queryLowered = q.toLowerCase()
+
+  const dataAsc = users.sort((a, b) => (a[sortColumn] < b[sortColumn] ? -1 : 1))
+
+  const dataToFilter = sort === 'asc' ? dataAsc : dataAsc.reverse()
+
+  const filteredData = dataToFilter.filter(
+    user => {
+      return  (user.category.toLowerCase().includes(queryLowered)) &&
+    user.status === (status === false ? status :(status || user.status))
+    }
+     
+  )
+
+  /* eslint-enable  */
+    const response = {
+      total: filteredData.length,
+      users: paginateArray(filteredData, perPage, page)
+    }
+    res.status(200).json(response)
+ 
+});
+
 const getCategoryById = AsyncHandler(async (req, res) => {
+  console.log(req.params.id);
   const category = await Category.findById(req.params.id);
   res.status(200).json(category);
 });
@@ -84,4 +122,5 @@ module.exports = {
   getCategoryById,
   updateCategory,
   removeCategory,
+  getCategoryChunk
 };

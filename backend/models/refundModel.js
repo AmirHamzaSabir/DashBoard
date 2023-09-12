@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const refundScheme = new mongoose.Schema({
     bankAccountNumber:{
         type:'string',
-        required: true
+        required: false
     },
     refundAmount:{
         type:'number',
-        required:true
+        required:false
     },
     orderNumber:{
         type:mongoose.Schema.ObjectId,
-        required:true,
+        required:false,
         ref: 'Order'
     }
 })

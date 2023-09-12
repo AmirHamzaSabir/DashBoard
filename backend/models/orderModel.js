@@ -4,12 +4,12 @@ const shippingSchema = require('./shippingModel');
 
 
 const orderSchema = mongoose.Schema({
-    product: {
+    productId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref:'Product',
     },
-    customer: {
+    customerId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref:'Customer',
@@ -20,12 +20,17 @@ const orderSchema = mongoose.Schema({
         default:'pending'
     },
     refundDetails:{
-        type: refundScheme,
+        type: [refundScheme],
         required:false
     },
     shippingDetails:{
-        type: shippingSchema,
+        type: [shippingSchema],
         required:false
+    },
+    quantity: {
+        type: Number,
+        required: false,
+        default:1
     }
 })
 
