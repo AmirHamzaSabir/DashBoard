@@ -60,8 +60,6 @@ const addDeliveryCode = AsyncHandler(async(req, res) => {
 const updateDeliveryCode = AsyncHandler(async(req,res)=>{
     const user = req.user;
     var record = null;
-    console.log(req.body)
-    console.log(user)
  if(user.role === 2 || user.role === 1){
     const data = await Delivery.findById(req.params.id);
     if (data) {

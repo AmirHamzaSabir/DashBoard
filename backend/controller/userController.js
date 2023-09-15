@@ -72,7 +72,6 @@ const loginUser = AsyncHandler(async (req, res) => {
         eCommerceCartItemsCount: 5,
       },
     };
-    // console.log(user);
 
     const accessToken = jwt.sign({ id: user.id }, jwtSecret, {
       expiresIn: jwtExpireTime,
@@ -202,8 +201,6 @@ const updateUser = AsyncHandler(async (req, res) => {
   var response = null;
   if (user.role === 2) {
     const data = await User.findById(req.params.id);
-    console.log(req.body);
-
     if (data) {
       response = await User.findOneAndUpdate(
         { _id: `${req.params.id}` },

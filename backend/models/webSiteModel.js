@@ -10,4 +10,4 @@ const siteFeatureSchema = mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Ticket',siteFeatureSchema);
+module.exports = mongoose.model('WebSite',siteFeatureSchema);

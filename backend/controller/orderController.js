@@ -54,8 +54,10 @@ const getOrdersChunk = AsyncHandler(async (req, res) => {
         {
           $match: {
             'productInfo.name': {
-                $regex: queryLowered, // Use a regular expression for partial matching
-                $options: 'i', // Optional: Case-insensitive matching
+                // Use a regular expression for partial matching
+                $regex: queryLowered, 
+                // Optional: Case-insensitive matching
+                $options: 'i', 
               },
           },
         },

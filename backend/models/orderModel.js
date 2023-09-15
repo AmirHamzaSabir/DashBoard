@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const refundScheme = require('./refundModel');
 const shippingSchema = require('./shippingModel');
-
-
 const orderSchema = mongoose.Schema({
     productId: {
         type: mongoose.Schema.Types.ObjectId,

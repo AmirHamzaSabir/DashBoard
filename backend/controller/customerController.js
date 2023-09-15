@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { paginateArray } = require("../customFunctons/functions");
 
 const getAllCustomers = AsyncHandler(async (req, res) => {
-  const customers = await Customer.find();
+  const customers = await Customer.find().select("-password");
   res.status(200).json({ customers });
 });
 const getCustomersChunk = AsyncHandler(async (req, res) => {

@@ -1,38 +1,38 @@
 const mongoose = require('mongoose');
 const ticketSchema = mongoose.Schema({
-    serialNumber :{
-        type:String,
-        required:false,
+    serialNumber : {
+        type: Number,
+        required: true
     },
-    email:{
-        type:String,
-        required:false,
-    },
-    fullName:{
-        type:String,
-        required:false,
-    },
-    mobileNumber:{
-        type:String,
-        required:false,
+    customerId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'customer',
+        required:true,
     },
     description:{
         type:String,
         required:false,
     },
     status:{
-        type:Boolean,
+        type: String,
         require:false,
-
     },
     priority:{
         type:String,
+        default: "moderate"
+    },
+    createdAt : {
+        type: Date,
+        default: Date.now,
+    },
+    updatedAt : {
+        type: Date,
         required:false,
     },
-    isApproved:{
-        type:Boolean,
+    closedAt : {
+        type: Date,
         required:false,
     }
 });
 
-module.exports = mongoose.model('SiteFeature',ticketSchema);
+module.exports = mongoose.model('Ticket',ticketSchema);

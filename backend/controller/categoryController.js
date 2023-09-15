@@ -23,7 +23,6 @@ const addCategory = AsyncHandler(async (req, res) => {
 });
 
 const getCategories = AsyncHandler(async (req, res) => {
-  console.log("Called All categories")
   const categories = await Category.find();
   res.status(200).json({
     categories,
@@ -65,17 +64,14 @@ const getCategoryChunk = AsyncHandler(async (req, res) => {
 });
 
 const getCategoryById = AsyncHandler(async (req, res) => {
-  console.log(req.params.id);
   const category = await Category.findById(req.params.id);
   res.status(200).json(category);
 });
 const updateCategory = AsyncHandler(async (req, res) => {
   const user = req.user;
   var response = null;
-  console.log(user);
   try {
     if (user.role === 2) {
-      console.log(req.body);
       const data = await Category.findById(req.params.id);
       if (data) {
         response = await Category.findOneAndUpdate(
