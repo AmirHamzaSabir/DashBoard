@@ -4,10 +4,20 @@ const paymentGateWaySchema = mongoose.Schema({
         type:String,
         required:false,
     },
+    customaizableOptions:{
+        type:[String]
+    },
     status:{
-        type:String,
+        type:Boolean,
         required:false,
     },
+    dynamicQR:{
+        status:Boolean,
+    },
+    superAdminId:{
+        type:[mongoose.Schema.Types.ObjectId],
+        required:true
+    }
 });
 
 module.exports = mongoose.model('PaymentGateWay',paymentGateWaySchema);

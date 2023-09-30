@@ -2,10 +2,12 @@ const AsyncHandler = require("express-async-handler");
 const Counter = require("../models/counterModel")
 const Ticket = require("../models/ticketModel");
 const { paginateArray } = require("../customFunctons/functions");
+
 const getAllTickets = AsyncHandler(async (req, res) => {
   const tickets = await Ticket.find();
   res.status(200).json({ tickets });
 });
+
 
 const postTicket = AsyncHandler(async (req, res) => {
   var serialNumber;
@@ -28,7 +30,7 @@ const postTicket = AsyncHandler(async (req, res) => {
     console.log(ticket);
     res.status(200).json({ ticket});
   } catch (err) {
-    res.status(403);
+    res.status(401);
     throw new Error("Error while creating Ticket");
   }
 });

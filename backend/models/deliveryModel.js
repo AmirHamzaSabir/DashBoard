@@ -3,10 +3,12 @@ const deliveryModel = mongoose.Schema({
     pinCode:{
         type:String,
         required: true,
+        unique:true
     },
     district : {
         type : String,
-        required: true
+        required: true,
+        unique:true
     },
     countryName:{
         type:String,

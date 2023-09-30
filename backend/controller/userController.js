@@ -99,7 +99,7 @@ const loginUser = AsyncHandler(async (req, res) => {
 });
 
 const getUsers = AsyncHandler(async (req, res) => {
-  const users = await User.find();
+  const users = await User.find().select("-password");
   res.json(users);
 });
 

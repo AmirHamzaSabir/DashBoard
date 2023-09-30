@@ -8,6 +8,14 @@ const siteFeatureSchema = mongoose.Schema({
         type:String,
         required:false,
     },
+    color:{
+        type:String,
+        required:false,
+    },
+    mainImages:{
+        type:[String],
+        required:false,
+    } 
 });
 
 module.exports = mongoose.model('WebSite',siteFeatureSchema);

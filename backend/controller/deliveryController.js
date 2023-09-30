@@ -1,6 +1,11 @@
 const AsyncHandler = require('express-async-handler');
 const Delivery = require("../models/deliveryModel");
 const { paginateArray } = require('../customFunctons/functions');
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const readXlsxFile = require('read-excel-file/node')
+const upload = () => multer({storage});
+
 const getAllDeliveryCodes = AsyncHandler(async(req,res) =>{
     const allCodes = await Delivery.find();
     res.status(200).json({allCodes});
@@ -48,6 +53,105 @@ const getDeliveryCodesChunk = AsyncHandler(async (req, res) => {
 })
 
 
+const readThroughExcel = AsyncHandler(async (req, res) => {
+  try{
+    var codesArray = [], emptyRows = 0;
+    const uploadSingle = await upload().single("file");
+    uploadSingle(req, res, async err => {
+      if (err) return res.status(401).json({status: false, message: err.message});
+      // Reading the Excel file
+      readXlsxFile(Buffer.from(req.file.buffer)).then(async (rows) => {
+        for(let index= 0; index < rows.length; index++){
+          if(index === 0){
+            // Check if the header row is valid
+            if (
+              rows[index][0]?.toLowerCase().replace(" ", "").trim() !== "pincode" ||
+              rows[index][1]?.toLowerCase().replace(" ", "").trim() !== "district" ||
+              rows[index][2]?.toLowerCase().replace(" ", "").trim() !== "countryname"
+            ) {
+              return res.status(401).json({
+                status: false,
+                message:
+                  "Header row must contain columns 'Pin Code', 'District', and 'Country Name'.",
+              });
+              
+            } else {
+              continue;
+            }
+          }else if(index > 0) {
+              // Check if all values in the row are null
+              if (rows[index].every((value) => value === null)) {
+                emptyRows++;
+                continue;
+              }
+              if (rows[index][0] !== null && rows[index][1] !== null && rows[index][2] !== null){
+                const data = {
+                  pinCode: rows[index][0],
+                  district: rows[index][1],
+                  countryName: rows[index][2]
+                }
+                codesArray.push(data);
+              }else{
+                return res.status(401).json({status: false, message: `Error Occured while reading the data at row: ${index}`});
+              }
+          }
+        }
+        try{
+          if(codesArray.length > 0 && codesArray.length === (rows.length - emptyRows -1)){
+            const response = await Delivery.insertMany(codesArray)
+            return res.status(200).json({response})
+          }
+        } catch (err) {
+          res.status(401).json({message: "Error occurred while inserting data. Due to duplication."});
+        }
+        //  rows.forEach(async(row, index) => {
+        //    if(index === 0){
+        //     console.log(index)
+        //     // Check if the header row is valid
+        //     if (
+        //       row[0]?.toLowerCase().trim() !== "pincode" ||
+        //       row[1]?.toLowerCase().trim() !== "district" ||
+        //       row[2]?.toLowerCase().trim() !== "countryname"
+        //     ) {
+        //       return res.status(401).json({
+        //         status: false,
+        //         message:
+        //           "Header row must contain columns 'Pin Code', 'District', and 'Country Name'.",
+        //       });
+        //     } else {
+        //       return;
+        //     }
+        //   }else if(index > 0) {
+        //       // Check if all values in the row are null
+        //       if (row.every((value) => value === null)) {
+        //         // If all values are null, continue to the next iteration
+        //         return;
+        //       }
+        //       if (row[0] !== null && row[1] !== null && row[2] !== null){
+        //         const data = {
+        //           pinCode: row[0],
+        //           district: row[1],
+        //           countryName: row[2]
+        //         }
+        //         codesArray.push(data);
+        //         if(index === rows.length-1){
+        //           const response = await Delivery.insertMany(codesArray)
+        //           return res.status(200).json({response})
+        //         }
+        //       }else{
+        //         return res.status(401).json({status: false, message: `Error Occured while reading the data at row: ${index}`});
+        //       }
+        //   }
+        //  })
+      })
+      
+    })
+  } catch (err) {
+    res.status(401).json({message: "Error while reading excel file"});
+  }
+});
+
+
 const addDeliveryCode = AsyncHandler(async(req, res) => {
     const { pinCode, district, countryName, codFee} = req.body;  
         const record = await Delivery.create({
@@ -92,5 +196,6 @@ module.exports ={
     getDeliveryCodesChunk,
     addDeliveryCode,
     updateDeliveryCode,
-    removeDeliveryCode
+    removeDeliveryCode,
+    readThroughExcel
 }

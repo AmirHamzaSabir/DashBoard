@@ -32,6 +32,14 @@ const ticketSchema = mongoose.Schema({
     closedAt : {
         type: Date,
         required:false,
+    },
+    employeeId: {
+        type:mongoose.Schema.Types.ObjectId,
+        required: false,
+    },
+    remarks:{
+        type:String,
+        required: false,
     }
 });
 

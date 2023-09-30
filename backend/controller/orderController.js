@@ -35,7 +35,6 @@ const getOrdersChunk = AsyncHandler(async (req, res) => {
       sortColumn = 'name'
     } = req.body
 
-    /* eslint-disable  */
     const queryLowered = q.toLowerCase()
   
     const dataAsc = order.sort((a, b) => (a[sortColumn] < b[sortColumn] ? -1 : 1))
@@ -45,7 +44,8 @@ const getOrdersChunk = AsyncHandler(async (req, res) => {
     const dataArr = await Order.aggregate([
         {
           $lookup: {
-            from: 'products', // Name of the products collection
+             // Name of the products collection
+            from: 'products',
             localField: 'productId',
             foreignField: '_id',
             as: 'productInfo',
