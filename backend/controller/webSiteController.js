@@ -34,7 +34,6 @@ async function getObjectURL(key) {
 }
 async function putObjectURL(filename, contentType) {
   const key = filename;
-  console.log(key);
   const command = new PutObjectCommand({
     Bucket: bucketName,
     Key: key,
@@ -49,11 +48,27 @@ const getAllSiteFeatures = AsyncHandler(async (req, res) => {
   res.status(200).json({ siteFeature });
 });
 
+const postPopup = AsyncHandler(async(req, res) => {
+  try{
+        const uploadSingle = await upload().single("image");
+        uploadSingle(req, res, async (err) => {
+          if (err) return res.status(401).json({message});
+          const imageName = Date.now();
+          const imageBuffer = await sharp(req.file.buffer)
+            .resize({width: 2376, height : 807, fit:"contain"})
+            .toFormat("jpeg")
+            .toBuffer();
+        })
+  }catch(err){
+
+  }
+})
+
 const postSiteFeature = AsyncHandler(async (req, res) => {
   try {
     const uploadSingle = await upload().single("image");
     uploadSingle(req, res, async (err) => {
-      if (err) return res.status(401).json({ status: false, error: err });
+      if (err) return res.status(401).json({message: err });
       const imageName = Date.now()
       const imageBuffer = await sharp(req.file.buffer)
         .resize({width: 2376, height : 807, fit:"contain"})
@@ -70,9 +85,9 @@ const postSiteFeature = AsyncHandler(async (req, res) => {
       const response = await client.send(command);
       if(response.$metadata.httpStatusCode === 200){
         const data =  await SiteFeature.create({banner:imageName});
-        res.status(200).json({status: true, message: "Image Added Successfully" , data});
+        res.status(200).json({message: "Image Added Successfully" , data});
       }else{
-        res.status(401).json({status: false, message: "Error Occured!" , data});
+        res.status(401).json({message: "Error Occured!" , data});
       }
     });
   } catch (err) {
