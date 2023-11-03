@@ -100,7 +100,7 @@ const loginUser = AsyncHandler(async (req, res) => {
 
 const getUsers = AsyncHandler(async (req, res) => {
   const users = await User.find().select("-password");
-  res.json(users);
+  res.status(200).json(users);
 });
 
 const getUsersChunk = AsyncHandler(async (req, res) => {

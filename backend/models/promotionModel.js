@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const popUpScheme = mongoose.Schema({
+const promotionScheme = mongoose.Schema({
     title :{
         type:String,
         required:true,
@@ -19,6 +19,10 @@ const popUpScheme = mongoose.Schema({
     image:{
         type:String,
         required:true,
+    },
+    status: {
+        type: Boolean,
+        default: true
     }
 })
-module.exports = mongoose.model("popup", popUpScheme)
+module.exports = mongoose.model("promotion", promotionScheme)

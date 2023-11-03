@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const popUpScheme = mongoose.Schema({
+const bannerScheme = mongoose.Schema({
     title :{
         type:String,
         required:true,
@@ -11,6 +11,10 @@ const popUpScheme = mongoose.Schema({
     image:{
         type:String,
         required:true,
+    },
+    status : {
+        type: Boolean,
+        default:true
     }
 })
-module.exports = mongoose.model("banner", popUpScheme)
+module.exports = mongoose.model("banner", bannerScheme)
